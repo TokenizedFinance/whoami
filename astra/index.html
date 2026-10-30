@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Ricardo Diaz for Astra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
+<style>
+/* Astra's own deck grammar: white panels, navy blocks, one thin orbit. Faces are Astra's (Cormorant Garamond, Plus Jakarta Sans). One accent: royal blue. */
+:root{
+  --navy:#0d2d5c; --navy-2:#0a1f3f; --royal:#2227bc; --gold:#c9a84c;
+  --bg:#ffffff; --panel:#f3f6fc; --ink:#0d2d5c; --text:#273146; --muted:#5b6782; --line:#d9e0ee;
+  --serif:"Cormorant Garamond",Garamond,Georgia,serif; --sans:"Plus Jakarta Sans",Arial,sans-serif;
+  --ease:cubic-bezier(.23,1,.32,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1730;--panel:#0f1f42;--ink:#ffffff;--text:#dfe6f6;--muted:#a3b0cf;--line:#223768;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0a1730;--panel:#0f1f42;--ink:#ffffff;--text:#dfe6f6;--muted:#a3b0cf;--line:#223768;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+::selection{background:var(--royal);color:#fff}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p{margin:0}
+h1,h2{font-family:var(--serif);font-weight:600;color:var(--ink);text-wrap:balance}
+h1{font-size:clamp(2.4rem,4.6vw,3.6rem);line-height:1.02;letter-spacing:-.01em}
+h2{font-size:clamp(1.8rem,3.2vw,2.5rem);line-height:1.08}
+h3{font-size:1.02rem;font-weight:600;color:var(--ink)}
+a{color:var(--royal);text-underline-offset:3px}
+.wrap{max-width:70rem;margin:0 auto;padding:0 20px}
+button{font:inherit;cursor:pointer;transition:transform .16s var(--ease),background .2s,color .2s,border-color .2s}
+button:active{transform:scale(.97)}
+:focus-visible{outline:3px solid var(--royal);outline-offset:3px;border-radius:4px}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-thumb{background:var(--line);border-radius:10px}
+svg{display:block}
+
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:22px;height:60px;white-space:nowrap;overflow-x:auto;scrollbar-width:none}
+nav b{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);margin-right:auto}
+nav a{color:var(--muted);text-decoration:none;font-size:.86rem;font-weight:500}
+nav a:hover{color:var(--royal)}
+
+/* hero: thesis on the left, the mechanism running on the right */
+.hero{padding:56px 0 48px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+.hero .who{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.hero .who img{width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:50% 40%}
+.hero .who b{display:block;color:var(--ink);font-weight:600;font-size:.98rem}
+.hero .who span{font-size:.84rem;color:var(--muted)}
+.hero p.lead{margin-top:20px;font-size:1.08rem;max-width:34rem}
+.player{margin-top:28px;display:inline-flex;align-items:center;gap:14px;padding:8px 18px 8px 8px;border:1px solid var(--line);border-radius:999px;background:var(--bg);max-width:100%}
+.player button{width:46px;height:46px;border-radius:50%;border:0;background:var(--navy);color:#fff;display:grid;place-items:center;flex:none}
+.player button:hover{background:var(--royal)}
+.player .meta{font-size:.8rem;color:var(--muted);line-height:1.3}
+.player .meta strong{display:block;color:var(--ink);font-weight:600;font-size:.88rem}
+.player .bar{height:3px;width:120px;background:var(--line);border-radius:3px;overflow:hidden}
+.player .bar i{display:block;height:100%;width:0;background:var(--royal);transition:width .25s linear}
+
+/* orbit */
+.orbit{position:relative;aspect-ratio:1;max-width:560px;margin:0 auto;width:100%}
+.orbit svg{width:100%;height:100%;overflow:visible}
+.orbit .ring{fill:none;stroke:var(--line);stroke-width:1.2}
+.orbit .spoke{stroke:var(--royal);stroke-width:1.4;stroke-dasharray:4 6;opacity:.55}
+.orbit .core{fill:var(--navy)}
+.orbit .core-t{font-family:var(--serif);font-size:30px;font-weight:600;fill:#fff;text-anchor:middle}
+.orbit .core-s{font-family:var(--sans);font-size:10.5px;fill:#c9d3ea;text-anchor:middle;letter-spacing:.02em}
+.orbit .pulse{fill:var(--royal)}
+.orbit .node{cursor:pointer}
+.orbit .node circle{fill:var(--bg);stroke:var(--navy);stroke-width:1.5;transition:fill .2s,stroke .2s,r .2s var(--ease)}
+.orbit .node text{font-family:var(--sans);font-size:11.5px;font-weight:500;fill:var(--ink);text-anchor:middle;pointer-events:none}
+.orbit .node:hover circle,.orbit .node.on circle{fill:var(--royal);stroke:var(--royal)}
+.orbit .node.on text,.orbit .node:hover text{fill:#fff}
+.orbit .node:focus,.orbit .node:focus-visible{outline:none}
+.orbit .node:focus-visible circle{stroke:var(--gold);stroke-width:3}
+.orbit .std{font-family:var(--sans);font-size:10px;fill:var(--muted);text-anchor:middle;letter-spacing:.04em}
+.orbit .cap{font-family:var(--sans);font-size:10.5px;fill:var(--muted);text-anchor:middle}
+.how{margin-top:14px;min-height:5.2rem;border-top:1px solid var(--line);padding-top:14px;font-size:.94rem}
+.how b{color:var(--royal);font-weight:600}
+.how p{transition:opacity .22s var(--ease),filter .22s var(--ease)}
+.how p.swap{opacity:0;filter:blur(2px)}
+@media (prefers-reduced-motion:no-preference){
+  .orbit .pulse{animation:travel 2.6s var(--ease) infinite}
+  .orbit .pulse.p2{animation-delay:.65s}.orbit .pulse.p3{animation-delay:1.3s}.orbit .pulse.p4{animation-delay:1.95s}
+  @keyframes travel{0%{offset-distance:0%;opacity:0}12%{opacity:1}88%{opacity:1}100%{offset-distance:100%;opacity:0}}
+  .orbit .ringspin{transform-origin:280px 280px;animation:spin 90s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+}
+
+/* sections */
+section{padding:72px 0}
+section.panel{background:var(--panel)}
+.head{max-width:44rem;margin-bottom:34px;display:flex;flex-direction:column;gap:14px}
+
+/* trust: navy block */
+.trust{background:var(--navy);color:#fff;padding:72px 0}
+.trust h2{color:#fff}
+.trust p{color:#d5ddf2}
+.trust .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.chain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.chain li{display:grid;grid-template-columns:28px 1fr;gap:16px;align-items:start;padding:14px 0;border-top:1px solid rgba(255,255,255,.14);color:#e8edf8;font-size:1rem}
+.chain li:first-child{border-top:0}
+.chain li i{display:block;width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);margin-top:1px}
+.chain li:last-child{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:#fff;align-items:center}
+.chain li:last-child i{background:var(--gold);border-color:var(--gold)}
+
+/* how: three layers, one detail */
+.stack{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:start;margin-top:6px}
+.layers{position:relative;display:flex;flex-direction:column;gap:10px;padding-left:26px}
+.layers::before{content:"";position:absolute;left:5px;top:22px;bottom:22px;width:1px;background:var(--line)}
+.layer{position:relative;text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:18px 20px;display:grid;grid-template-columns:1fr;gap:4px;color:var(--ink);transition:transform .3s var(--ease),background .3s var(--ease),border-color .3s,box-shadow .3s var(--ease);cursor:pointer;font:inherit}
+.layer::before{content:"";position:absolute;left:-26px;top:22px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:1.5px solid var(--navy);transition:background .2s,border-color .2s,transform .2s var(--ease)}
+.layer:hover{transform:translateX(4px);border-color:var(--navy)}
+.layer.on{background:var(--navy);border-color:var(--navy);color:#fff;transform:translateX(8px);box-shadow:0 22px 44px -26px rgba(13,45,92,.65)}
+.layer.on::before{background:var(--royal);border-color:var(--royal);transform:scale(1.25)}
+.layer .n{font-weight:600;font-size:1.04rem}
+.layer .d{font-size:.88rem;color:var(--muted)}
+.layer.on .d{color:#d5ddf2}
+.layer .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.layer .chips button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:5px 11px;font-size:.8rem;color:var(--muted);font:inherit;font-size:.8rem;transition:background .2s,color .2s,border-color .2s,transform .16s var(--ease)}
+.layer .chips button:hover{border-color:var(--royal);color:var(--royal)}
+.layer .chips button:active{transform:scale(.97)}
+.layer.on .chips button{border-color:rgba(255,255,255,.35);color:#e8edf8}
+.layer.on .chips button:hover,.layer.on .chips button.on{background:var(--royal);border-color:var(--royal);color:#fff}
+.detail{position:sticky;top:84px;min-height:18rem}
+.detail h3{font-family:var(--serif);font-size:1.7rem;font-weight:600;line-height:1.15;margin-bottom:12px}
+.detail .cnt{color:var(--royal);font-weight:600;font-size:.9rem;margin-bottom:8px}
+.detail p{font-size:1rem}
+.fam{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.fam span{border:1px solid var(--line);border-radius:4px;padding:4px 9px;font-size:.8rem;color:var(--ink);background:var(--panel)}
+.detail>*{transition:opacity .22s var(--ease),filter .22s var(--ease),transform .22s var(--ease)}
+.detail.swap>*{opacity:0;filter:blur(2px);transform:translateY(4px)}
+
+/* proof line */
+.proof{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:40px 0 0}
+.proof div{padding:22px 24px 22px 0;display:flex;gap:16px;align-items:baseline}
+.proof div+div{border-left:1px solid var(--line);padding-left:24px}
+.proof em{font-family:var(--serif);font-style:normal;font-size:2rem;white-space:nowrap;line-height:1;color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.proof p{font-size:.92rem}
+
+/* mekong */
+.mekong .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:center}
+blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);line-height:1.15;color:var(--ink);font-weight:500;font-style:italic}
+.by{margin-top:14px;font-size:.86rem;color:var(--muted)}
+
+/* ventures: deal flow */
+.flow{position:relative;margin-top:14px}
+.flow .line{position:absolute;left:8%;right:8%;top:44px;height:1px;background:var(--line)}
+.flow .dot{position:absolute;top:40px;width:9px;height:9px;border-radius:50%;background:var(--royal);left:8%;animation:travel 6s linear infinite;box-shadow:0 0 0 4px rgba(34,39,188,.12)}
+@keyframes travel{0%{left:8%;opacity:0}6%{opacity:1}94%{opacity:1}100%{left:calc(92% - 9px);opacity:0}}
+.flow .stations{display:grid;grid-template-columns:repeat(4,1fr);position:relative}
+.station{background:none;border:0;padding:0;text-align:center;color:var(--muted);font:inherit;display:grid;justify-items:center;gap:12px;cursor:pointer}
+.station i{display:grid;place-items:center;width:88px;height:88px;border-radius:50%;background:var(--bg);border:1.5px solid var(--navy);color:var(--navy);font-style:normal;font-weight:600;font-size:.95rem;transition:background .25s var(--ease),color .25s,transform .3s var(--ease),box-shadow .3s var(--ease)}
+.station:hover i{transform:translateY(-3px)}
+.station:active i{transform:scale(.97)}
+.station[aria-selected="true"] i{background:var(--royal);border-color:var(--royal);color:#fff;transform:scale(1.08);box-shadow:0 18px 36px -22px rgba(34,39,188,.7)}
+.station small{font-size:.84rem;line-height:1.3;max-width:11rem}
+.station[aria-selected="true"] small{color:var(--ink);font-weight:600}
+.flow .say{margin:34px auto 0;max-width:42rem;text-align:center;min-height:5.2rem}
+.flow .say p{font-size:1.08rem;color:var(--ink);transition:opacity .22s var(--ease),filter .22s var(--ease)}
+.flow .say p.swap{opacity:0;filter:blur(2px)}
+.cyc{height:2px;background:var(--line);border-radius:2px;overflow:hidden;margin:18px auto 0;max-width:12rem}
+.cyc i{display:block;height:100%;width:0;background:var(--royal);transition:width .2s linear}
+
+/* career timeline */
+.tl{position:relative;margin-top:10px}
+.tl .rail{display:grid;grid-template-columns:repeat(6,1fr);position:relative;padding-top:22px}
+.tl .rail::before{content:"";position:absolute;left:0;right:0;top:8px;height:1px;background:var(--line)}
+.tl .rail button{background:none;border:0;text-align:left;padding:0 10px 0 0;color:var(--muted);font-size:.84rem;position:relative}
+.tl .rail button::before{content:"";position:absolute;top:-19px;left:0;width:11px;height:11px;border-radius:50%;background:var(--bg);border:1.5px solid var(--navy);transition:background .2s,transform .2s var(--ease)}
+.tl .rail button[aria-selected="true"]{color:var(--ink);font-weight:600}
+.tl .rail button[aria-selected="true"]::before{background:var(--royal);border-color:var(--royal);transform:scale(1.25)}
+.tl .body{margin-top:26px;display:grid;grid-template-columns:11rem 1fr;gap:28px;min-height:8rem}
+.tl .yrs{font-family:var(--serif);font-size:1.5rem;color:var(--ink);line-height:1.15}
+.tl .body p{transition:opacity .22s var(--ease),filter .22s var(--ease)}
+.tl .body .swap{opacity:0;filter:blur(2px)}
+.tl .cyc{margin:22px 0 0;max-width:12rem}
+
+/* letter */
+.letter{position:relative;max-width:48rem;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:34px 36px;max-height:360px;overflow:hidden;transition:max-height .6s var(--ease)}
+.letter p{margin-bottom:14px;font-size:.98rem}
+.letter.open{max-height:5000px}
+.letter:not(.open)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:140px;background:linear-gradient(transparent,var(--bg))}
+.more{margin-top:16px;background:none;border:1px solid var(--navy);color:var(--navy);border-radius:999px;padding:10px 20px;font-weight:600;font-size:.9rem}
+.more:hover{background:var(--navy);color:#fff}
+
+/* close */
+.contact{background:var(--navy);color:#fff;padding:64px 0}
+.contact .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px}
+.contact h2{color:#fff}
+.contact p{color:#d5ddf2;font-size:.92rem;margin-top:8px}
+.contact a.btn{display:inline-block;background:#fff;color:var(--navy);text-decoration:none;font-weight:600;padding:13px 24px;border-radius:999px;margin-right:10px;transition:transform .16s var(--ease)}
+.contact a.btn:active{transform:scale(.97)}
+.contact a.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.55)}
+
+@media (prefers-reduced-motion:no-preference){
+  .hero .in{opacity:0;transform:translateY(10px);animation:in .7s var(--ease) forwards}
+  .hero .in:nth-child(2){animation-delay:.06s}.hero .in:nth-child(3){animation-delay:.12s}.hero .in:nth-child(4){animation-delay:.18s}
+  @keyframes in{to{opacity:1;transform:none}}
+}
+@media (max-width:860px){
+  .hero .wrap,.trust .wrap,.mekong .wrap{grid-template-columns:1fr;gap:34px}
+  .orbit{max-width:420px}
+  .proof,.stack{grid-template-columns:1fr}
+  .proof div+div{border-left:0;padding-left:0;border-top:1px solid var(--line)}
+  .proof div{padding:18px 0}
+  .stack{gap:28px}.detail{position:static;min-height:0}
+  .flow .stations{grid-template-columns:repeat(2,1fr);gap:22px 8px}.flow .line,.flow .dot{display:none}.station i{width:76px;height:76px;font-size:.88rem}
+  .row{grid-template-columns:1fr;gap:6px}
+  .tl .rail{grid-template-columns:repeat(3,1fr);row-gap:28px}
+  .tl .body{grid-template-columns:1fr;gap:10px}
+  .letter{padding:24px 20px}
+  section{padding:56px 0}
+}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <b>Ricardo G. Diaz</b>
+  <a href="#trust">Trust</a><a href="#how">How</a><a href="#ventures">Ventures</a><a href="#career">Career</a><a href="#letter">Letter</a><a href="#contact">Contact</a>
+</div></nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <div class="who in"><img src="photo.jpg" alt="Ricardo G. Diaz"><div><b>Ricardo G. Diaz</b><span>For the Astra hiring team · Head of IT Security</span></div></div>
+      <h1 class="in">AI-led security and governance for regulated digital assets</h1>
+      <p class="lead in">I design security the way it should now be done: AI governance and AI security controls that run every day, across Web2 and Web3, and prove themselves to auditors and regulators. Work that used to take a team.</p>
+      <div class="player in" id="player">
+        <button type="button" id="pp" aria-label="Play my letter"><svg id="ic" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg></button>
+        <div class="meta"><strong>Hear my letter</strong><span id="time">AI-narrated · about 5 min</span></div>
+        <div class="bar" aria-hidden="true"><i id="prog"></i></div>
+      </div>
+      <audio id="aud" src="letter.mp3" preload="none"></audio>
+    </div>
+
+    <div>
+      <div class="orbit" id="orbit" role="group" aria-label="The four board controls, run every day by AI agents, feeding evidence to the centre: trust">
+        <svg viewBox="0 0 560 560">
+          <g class="ringspin"><circle class="ring" cx="280" cy="280" r="262"/></g>
+          <circle class="ring" cx="280" cy="280" r="180"/>
+          <circle class="ring" cx="280" cy="280" r="92" style="stroke-dasharray:2 5"/>
+          <!-- standards on the outer ring -->
+          <text class="std" x="280" y="18">NIST CSF</text>
+          <text class="std" x="500" y="150">ISO/IEC 27001</text>
+          <text class="std" x="520" y="420">SOC 1 and SOC 2</text>
+          <text class="std" x="280" y="552">MITRE ATT&amp;CK and ATLAS</text>
+          <text class="std" x="40" y="420">ISO/IEC 42001</text>
+          <text class="std" x="60" y="150">NIST AI RMF</text>
+          <!-- spokes -->
+          <line class="spoke" x1="280" y1="100" x2="280" y2="210"/>
+          <line class="spoke" x1="460" y1="280" x2="350" y2="280"/>
+          <line class="spoke" x1="280" y1="460" x2="280" y2="350"/>
+          <line class="spoke" x1="100" y1="280" x2="210" y2="280"/>
+          <!-- evidence pulses -->
+          <circle class="pulse p1" r="4" style="offset-path:path('M280 100 L280 212')"/>
+          <circle class="pulse p2" r="4" style="offset-path:path('M460 280 L348 280')"/>
+          <circle class="pulse p3" r="4" style="offset-path:path('M280 460 L280 348')"/>
+          <circle class="pulse p4" r="4" style="offset-path:path('M100 280 L212 280')"/>
+          <!-- core -->
+          <circle class="core" cx="280" cy="280" r="68"/>
+          <text class="core-t" x="280" y="282">Trust</text>
+          <text class="core-s" x="280" y="304">proven every day</text>
+          <!-- nodes -->
+          <g class="node on" data-i="0" tabindex="0" role="button" aria-label="Two unrelated approvers">
+            <circle cx="280" cy="100" r="34"/><text x="280" y="97">Two</text><text x="280" y="111">approvers</text></g>
+          <g class="node" data-i="1" tabindex="0" role="button" aria-label="Cold wallet and multisig">
+            <circle cx="460" cy="280" r="34"/><text x="460" y="277">Cold wallet</text><text x="460" y="291">multisig</text></g>
+          <g class="node" data-i="2" tabindex="0" role="button" aria-label="Investment Management Committee">
+            <circle cx="280" cy="460" r="34"/><text x="280" y="457">Investment</text><text x="280" y="471">Committee</text></g>
+          <g class="node" data-i="3" tabindex="0" role="button" aria-label="Internal audit to the Audit Committee">
+            <circle cx="100" cy="280" r="34"/><text x="100" y="277">Internal</text><text x="100" y="291">audit</text></g>
+          <text class="cap" x="280" y="536">The controls your board set on 13 May 2026. Tap one.</text>
+        </svg>
+      </div>
+      <div class="how" aria-live="polite"><p id="howp"><b>Two unrelated approvers for bitcoin purchases.</b> AI agents check every purchase request against the approval policy before it reaches a wallet, confirm the approvers are unrelated, and log who approved what and when.</p></div>
+    </div>
+  </div>
+</header>
+
+<div class="trust" id="trust">
+  <div class="wrap">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <h2>Astra sells trust. Security is how you prove it.</h2>
+      <p>Institutions hand Astra their assets because they trust that those assets are safe. Astra builds "the regulated infrastructure that allows Asian institutions to hold and custody Bitcoin at scale." Rakkar is one of only two operating SEC-licensed digital asset custodians in Thailand, and Thai bitcoin and ether ETFs must keep their assets with an SEC-regulated custodian. The custodian that proves its trust first wins the mandates.</p>
+    </div>
+    <ol class="chain">
+      <li><i></i>Controls that run every day</li>
+      <li><i></i>Evidence, produced as the work happens</li>
+      <li><i></i>Assurance for auditors, partners and the SEC</li>
+      <li><i></i>Trust that wins custody mandates</li>
+    </ol>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="head">
+      <h2>The question is how. The answer is AI.</h2>
+      <p>I have designed and reviewed these controls for custodians. Doing it by hand takes a team on a yearly cycle. I run it as three layers, with AI governance and AI security tooling, across Web2 and Web3, in any environment. Tap a layer, or a standard, to see what sits inside.</p>
+    </div>
+    <div class="stack">
+      <div class="layers" role="tablist" aria-label="The three layers">
+        <button type="button" role="tab" class="layer on" data-l="0" aria-selected="true"><span class="n">Who runs the controls</span><span class="d">AI agents, every day, not a team once a year</span></button>
+        <button type="button" role="tab" class="layer" data-l="1" aria-selected="false"><span class="n">Evidence</span><span class="d">Produced as the controls run, mapped to every mandate</span></button>
+        <div class="layer" data-l="2" role="tab" tabindex="0" aria-selected="false"><span class="n">The standards and the controls under them</span><span class="d">All of it built into my AI. Tap one.</span>
+          <div class="chips" id="chips"></div>
+        </div>
+      </div>
+      <div class="detail" id="detail" aria-live="polite"></div>
+    </div>
+    <div class="proof">
+      <div><em>3<span style="font-size:1.4rem;margin:0 .15em">→</span>1</em><p>Months for a large-enterprise risk assessment, with the AI risk systems I built.</p></div>
+      <div><em>10</em><p>Standards and their control catalogues, run as one control set that every mandate reuses.</p></div>
+      <div><em>20+</em><p>AI agents run Hashed Works with me. I use the same tooling on every engagement.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel mekong">
+  <div class="wrap">
+    <div>
+      <blockquote>"Build once in ASEAN's strictest regime, then travel with it across the Mekong."</blockquote>
+      <p class="by">Adam Nguyen, Astra, on LinkedIn</p>
+    </div>
+    <p>I already work across the Mekong, in Savannakhet, and Thailand is where I want to build. Building once to the strictest standard is how I design security: one control set that every new licence and every new country reuses.</p>
+  </div>
+</section>
+
+<section id="ventures">
+  <div class="wrap">
+    <div class="head">
+      <h2>I also sit on the investor's side of the table</h2>
+      <p>I have worked with startups in Silicon Valley since the start of my career, and today across Southeast Asia, most recently in Thailand and Singapore. So I read a deal the way your investment team does, and I can bring each new business onto one control set from the first day.</p>
+    </div>
+    <div class="flow" id="flow">
+      <span class="line"></span><span class="dot"></span>
+      <div class="stations" role="tablist" aria-label="How a deal moves through me">
+        <button type="button" role="tab" class="station" data-s="0" aria-selected="true"><i>Angels</i><small>send me the deals they have no time to check</small></button>
+        <button type="button" role="tab" class="station" data-s="1" aria-selected="false"><i>I vet</i><small>legitimate, and the right bones?</small></button>
+        <button type="button" role="tab" class="station" data-s="2" aria-selected="false"><i>Founders</i><small>product and go-to-market, zero to one</small></button>
+        <button type="button" role="tab" class="station" data-s="3" aria-selected="false"><i>Investors</i><small>ready for the seed or A round</small></button>
+      </div>
+      <div class="say"><p id="vsay"></p></div>
+      <div class="cyc"><i id="vcyc"></i></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="career">
+  <div class="wrap">
+    <div class="head"><h2>Where the experience comes from</h2></div>
+    <div class="tl">
+      <div class="rail" role="tablist">
+        <button role="tab" aria-selected="false" data-c="5">2004</button>
+        <button role="tab" aria-selected="false" data-c="4">2020</button>
+        <button role="tab" aria-selected="false" data-c="3">2021</button>
+        <button role="tab" aria-selected="false" data-c="2">2022</button>
+        <button role="tab" aria-selected="false" data-c="1">2023</button>
+        <button role="tab" aria-selected="true" data-c="0">Today</button>
+      </div>
+      <div class="body"><p class="yrs" id="cy">Feb 2022 to today</p><div><h3 id="ct">Managing Director and Principal Architect, Hashed Works</h3><p id="cb" style="margin-top:8px">Architecture studio for security, digital assets and agentic AI. Wrote an 11-layer security and compliance reference architecture for a stablecoin payment network. Built AI risk systems that cut a large-enterprise risk assessment from about 3 months to about 1.</p></div></div>
+      <div class="cyc"><i id="ccyc"></i></div>
+    </div>
+  </div>
+</section>
+
+<section id="letter">
+  <div class="wrap">
+    <div class="head"><h2>My letter to you</h2></div>
+    <div class="letter" id="letterText">
+      <p>Dear Astra hiring team,</p>
+      <p>I am applying for the Head of IT Security role.</p>
+      <p>Rakkar is one of only two operating SEC-licensed digital asset custodians in Thailand. Thai bitcoin and ether ETFs must now keep their assets with an SEC-regulated custodian, and as of 22 October no fund manager had filed yet. The custodian that first shows fund managers, banking partners and the SEC audit-ready evidence should win those mandates. Helping custodians, settlement firms and wallet companies build that evidence is my work.</p>
+      <p>On 13 May your board set clear controls for bitcoin purchases: at least two unrelated approvers, cold wallet and multisig, an Investment Management Committee, and internal audit reporting to the Audit Committee. I have designed and reviewed these controls for custodians. This role makes them run every day and proves them to the auditor and the regulator. For security I work to the NIST Cybersecurity Framework (CSF), NIST SP 800-53 for banks, ISO/IEC 27001, SOC 1 and SOC 2, and CIS Controls v8. For threats: MITRE ATT&amp;CK, and MITRE ATLAS for AI systems. For AI governance: ISO/IEC 42001, the NIST AI Risk Management Framework (AI RMF) and the EU AI Act. One control set maps to every mandate, including the SEC's, so each new licence reuses it and security pays its way: fewer audit findings, faster approvals, more mandates.</p>
+      <p>What you need right now is to show that you are compliant and that your setup is sound. I already have AI tooling built for this work, and I can show your team how it runs. Standing up SOC 2 or ISO 27001 normally takes months, because the controls are built for the audit. With my tooling the controls run first, every day, and the audit becomes proving what already works, at a pace your current maturity sets. That gets you the answers your auditors, banking partners and the SEC will ask for.</p>
+      <p>Orbix has KBank behind it. Rakkar will win on product and trust, and that is where I help: what to build, how to secure it, and how to win regulated partners.</p>
+      <p>At the end of 2020, BRD led a team with Deloitte, IBM and SBI Digital Asset Holdings educating major trade organizations and PayPal, and I led the PayPal education myself. Within six months, PayPal bought one of the first custodians, the security provider Curv. I led the launch of BRD's white-label wallet-as-a-service for banks and enterprises, worked on institutional custody built on MPC and HSMs at Coinbase, and led forensics investigations after stolen digital-asset incidents. Banks I have worked with include BNYM, State Street, HSBC and Citi; at EY I worked directly with Citi's executive team on its retail crypto and custody strategy. At Oracle I founded and grew the North America security consulting practice from 15 to 55 consultants and closed a USD 10M Database Vault sale to the Mexican government.</p>
+      <p>Today I run Hashed Works, an architecture studio that has worked with customers in Singapore and a government client in Vietnam, and is about to launch in Thailand. I am a US citizen and work remotely. This role would need visa sponsorship and a work permit, and I would gladly commit to a sponsoring employer for at least a year. My salary is negotiable.</p>
+      <p>Banks, wallets and custody have always existed, but banks only took stablecoins seriously after President Trump signed the GENIUS Act in July 2025. Since the second half of 2025, bank after bank and country after country has wanted its own stablecoin. That is crypto going mainstream in traditional finance, and it is still in its infancy. There has never been a better time to help banks and financial services keep pace with the technology while putting the right governance controls in place to do it safely, and I would welcome the chance to start that discussion with you.</p>
+      <p>- Ricardo</p>
+    </div>
+    <button class="more" id="more" type="button">Read the full letter</button>
+  </div>
+</section>
+
+<div class="contact" id="contact">
+  <div class="wrap">
+    <div><h2>Let's talk</h2><p>Google Meet, Signal or WhatsApp on request. The full two-page CV is attached to my application.</p></div>
+    <div><a class="btn" href="mailto:ricardo@hashedworks.io">ricardo@hashedworks.io</a><a class="btn ghost" href="https://www.linkedin.com/in/Webdefense" target="_blank" rel="noopener">LinkedIn</a></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var E="cubic-bezier(.23,1,.32,1)";
+  // audio
+  var a=document.getElementById("aud"),pp=document.getElementById("pp"),ic=document.getElementById("ic"),pr=document.getElementById("prog"),tm=document.getElementById("time");
+  var PLAY='<path d="M4 2.5v11l9-5.5z" fill="currentColor"/>',PAUSE='<path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z" fill="currentColor"/>';
+  pp.addEventListener("click",function(){ if(a.paused){a.play();ic.innerHTML=PAUSE;pp.setAttribute("aria-label","Pause");} else {a.pause();ic.innerHTML=PLAY;pp.setAttribute("aria-label","Play my letter");} });
+  a.addEventListener("timeupdate",function(){ if(a.duration){pr.style.width=(a.currentTime/a.duration*100)+"%";var r=Math.max(0,a.duration-a.currentTime);tm.textContent="AI-narrated · "+Math.floor(r/60)+":"+String(Math.floor(r%60)).padStart(2,"0")+" left";} });
+  a.addEventListener("ended",function(){ic.innerHTML=PLAY;pr.style.width="0";tm.textContent="AI-narrated · about 5 min";});
+
+  // orbit nodes
+  var HOW=[
+    ["Two unrelated approvers for bitcoin purchases.","AI agents check every purchase request against the approval policy before it reaches a wallet, confirm the approvers are unrelated, and log who approved what and when."],
+    ["Cold wallet and multisig.","Agents watch wallet movements and key ceremonies against policy, on-chain and off-chain, and flag anything outside it in minutes, not at quarter end."],
+    ["An Investment Management Committee.","Each committee decision is recorded against the mandate it rests on, so the evidence pack builds itself as decisions are made."],
+    ["Internal audit reporting to the Audit Committee.","The Audit Committee sees live evidence mapped to ISO/IEC 27001, SOC 2 and the SEC's rules, not a yearly sample."]];
+  var nodes=document.querySelectorAll(".node"),howp=document.getElementById("howp");
+  function pick(i){ nodes.forEach(function(n){n.classList.toggle("on",n.dataset.i==i);}); howp.classList.add("swap"); setTimeout(function(){ howp.innerHTML="<b>"+HOW[i][0]+"</b> "+HOW[i][1]; howp.classList.remove("swap"); },180); }
+  nodes.forEach(function(n){ n.addEventListener("click",function(){pick(n.dataset.i);}); n.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(n.dataset.i);}}); });
+
+  // generic cycler: runs only in view, pauses on hover/focus, resumes 14s after a click, off under reduced motion
+  var RM=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function cycler(root,n,ms,go,bar){
+    var i=0,t0=0,raf,hold=0,vis=false,paused=false;
+    function tick(ts){ if(!t0)t0=ts; var el=ts-t0; if(bar)bar.style.width=Math.min(100,el/ms*100)+"%"; if(el>=ms){t0=ts;i=(i+1)%n;go(i);} raf=requestAnimationFrame(tick); }
+    function start(){ if(RM||raf||!vis||paused)return; t0=0; raf=requestAnimationFrame(tick); }
+    function stop(){ if(raf)cancelAnimationFrame(raf); raf=0; if(bar)bar.style.width="0"; }
+    root.addEventListener("mouseenter",function(){paused=true;stop();}); root.addEventListener("mouseleave",function(){paused=false;start();});
+    root.addEventListener("focusin",function(){paused=true;stop();}); root.addEventListener("focusout",function(){paused=false;start();});
+    if("IntersectionObserver" in window){ new IntersectionObserver(function(es){ vis=es[0].isIntersecting; vis?start():stop(); },{threshold:.35}).observe(root); } else { vis=true; start(); }
+    return { set:function(k){ i=k; stop(); clearTimeout(hold); hold=setTimeout(function(){paused=false;start();},14000); } };
+  }
+
+  // how: three layers
+  var STD=[
+    ["NIST CSF 2.0","6 functions","The outcome map every other framework hangs off.",["Govern","Identify","Protect","Detect","Respond","Recover"]],
+    ["NIST SP 800-53 Rev. 5","20 control families","The deepest control catalogue; my agents map the others to it.",["Access Control","Awareness and Training","Audit and Accountability","Assessment and Authorization","Configuration Management","Contingency Planning","Identification and Authentication","Incident Response","Maintenance","Media Protection","Physical and Environmental Protection","Planning","Program Management","Personnel Security","PII Processing and Transparency","Risk Assessment","System and Services Acquisition","System and Communications Protection","System and Information Integrity","Supply Chain Risk Management"]],
+    ["ISO/IEC 27001:2022","93 Annex A controls, 4 themes","The certificate regulators and banks ask for first.",["Organizational (37)","People (8)","Physical (14)","Technological (34)"]],
+    ["SOC 1 and SOC 2","5 Trust Services Criteria","SOC 1 covers controls over financial reporting; SOC 2 proves the controls you already run.",["Security","Availability","Processing Integrity","Confidentiality","Privacy"]],
+    ["CIS Controls v8","18 controls","The practical baseline I stand a security function up on.",["Enterprise Asset Inventory","Software Asset Inventory","Data Protection","Secure Configuration","Account Management","Access Control Management","Continuous Vulnerability Management","Audit Log Management","Email and Web Browser Protections","Malware Defenses","Data Recovery","Network Infrastructure Management","Network Monitoring and Defense","Security Awareness and Skills Training","Service Provider Management","Application Software Security","Incident Response Management","Penetration Testing"]],
+    ["MITRE ATT&CK","14 enterprise tactics","How attackers actually move; every control is tested against it.",["Reconnaissance","Resource Development","Initial Access","Execution","Persistence","Privilege Escalation","Defense Evasion","Credential Access","Discovery","Lateral Movement","Collection","Command and Control","Exfiltration","Impact"]],
+    ["MITRE ATLAS","Tactics and techniques against AI systems","The attack map for the AI itself, from model access to attack staging.",["ML Model Access","ML Attack Staging","Prompt and data poisoning paths","Model theft and evasion"]],
+    ["ISO/IEC 42001:2023","AI management system","The management standard for how an organisation governs its AI.",["AI policies","Internal organization","Resources for AI systems","AI system impact assessment","AI system life cycle","Data for AI systems","Information for interested parties","Use of AI systems","Third-party relationships"]],
+    ["NIST AI RMF 1.0","4 functions","Risk management for AI, mapped to the same control set.",["Govern","Map","Measure","Manage"]],
+    ["EU AI Act","Obligations by risk tier","The regulation your AI use will be judged against.",["Prohibited practices","High-risk systems","Transparency obligations","General-purpose AI models"]]];
+  var LAY=[
+    ["Who runs the controls","AI agents, every day","Each control in the catalogue has an agent that runs it, checks it and raises a hand when something drifts. What used to take a team of people on a yearly cycle runs continuously, across Web2 and Web3, in any environment."],
+    ["Evidence","Produced as the controls run","Not gathered for the audit. One control set maps to every mandate, including the SEC's, so one piece of evidence serves every regulator and your board at the same time. SOC 2 or ISO 27001 then becomes what it should be: proving controls that already run, at a pace your maturity sets."],
+    ["The standards and the controls under them","Built into my AI","All ten standards, and the control catalogues under them, live in my AI and its knowledge base. The business process of assessing, implementing and keeping the controls, and so defining trust daily, is what the AI runs. Tap a standard to see what sits under it."]];
+  var layers=document.querySelectorAll(".layer"),det=document.getElementById("detail"),chips=document.getElementById("chips");
+  STD.forEach(function(s,k){ var b=document.createElement("button"); b.type="button"; b.textContent=s[0]; b.dataset.k=k; b.addEventListener("click",function(e){ e.stopPropagation(); layer(2,k); }); chips.appendChild(b); });
+  function show(html){ det.classList.add("swap"); setTimeout(function(){ det.innerHTML=html; det.classList.remove("swap"); },200); }
+  function layer(i,k){
+    layers.forEach(function(l){ var on=+l.dataset.l===i; l.classList.toggle("on",on); l.setAttribute("aria-selected",on); });
+    chips.querySelectorAll("button").forEach(function(b){ b.classList.toggle("on", i===2 && +b.dataset.k===k); });
+    if(i===2 && k!=null){ var s=STD[k]; show("<p class='cnt'>"+s[1]+"</p><h3>"+s[0]+"</h3><p>"+s[2]+" My agents run these controls daily and keep the evidence for each one.</p><div class='fam'>"+s[3].map(function(f){return "<span>"+f+"</span>";}).join("")+"</div>"); }
+    else { var L2=LAY[i]; show("<p class='cnt'>"+L2[1]+"</p><h3>"+L2[0]+"</h3><p>"+L2[2]+"</p>"); }
+  }
+  layers.forEach(function(l){ l.addEventListener("click",function(){ layer(+l.dataset.l); }); l.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); layer(+l.dataset.l); } }); });
+  det.innerHTML="<p class='cnt'>"+LAY[0][1]+"</p><h3>"+LAY[0][0]+"</h3><p>"+LAY[0][2]+"</p>";
+
+  // ventures: deal flow, cycling
+  var V=[
+    "A network of angel investors sends me the opportunities they have no time to check. I also act as GP at a VC firm.",
+    "Is the startup legitimate, and does it have the right bones? Product ideas are stress-tested by my own panel of AI agents before money goes in.",
+    "Product and go-to-market strategy, business models and first hires, from zero to one.",
+    "I prepare the founders and put them in front of investors, ready for the seed or A round. Silicon Valley since the start of my career; Thailand and Singapore today."];
+  var sts=document.querySelectorAll(".station"),vsay=document.getElementById("vsay");
+  function station(i){ sts.forEach(function(b,k){ b.setAttribute("aria-selected",k===i); }); vsay.classList.add("swap"); setTimeout(function(){ vsay.textContent=V[i]; vsay.classList.remove("swap"); },180); }
+  vsay.textContent=V[0];
+  var vc=cycler(document.getElementById("flow"),4,5000,station,document.getElementById("vcyc"));
+  sts.forEach(function(b,k){ b.addEventListener("click",function(){ station(k); vc.set(k); }); });
+
+  // career timeline
+  var C=[
+    ["Feb 2022 to today","Managing Director and Principal Architect, Hashed Works","Architecture studio for security, digital assets and agentic AI. Wrote an 11-layer security and compliance reference architecture for a stablecoin payment network. Built AI risk systems that cut a large-enterprise risk assessment from about 3 months to about 1."],
+    ["Jul 2023 to Aug 2024","CISO and VP of Business Development, a security technology company","Built the security function from zero on NIST CSF, CIS Controls v8 and MITRE ATT&CK. Virtual CISO for one of the world's top three semiconductor test companies."],
+    ["Jul 2022 to Jun 2023","Director, Global Head of Product, Blockchain Financial Services, EY","Set global product strategy for EY Tokenized Securities Services. Worked directly with Citi's executive team on its retail crypto and custody strategy."],
+    ["Dec 2021 to Feb 2022","Solutions Architect, Institutional, Coinbase","Prime brokerage, custody and crypto infrastructure for large institutions, using MPC key management and HSMs."],
+    ["Aug 2020 to Dec 2021","Head of Solutions, BRD (acquired by Coinbase)","Led the launch of BRD's white-label wallet-as-a-service for banks and enterprises. Led the PayPal education in a team with Deloitte, IBM and SBI Digital Asset Holdings."],
+    ["Jun 2004 to Mar 2017","Security Architect to Director, Oracle","Founded and grew the North America security consulting practice from 15 to 55 consultants, delivering control assessments for banks and custodians. Closed a USD 10M Database Vault sale to the Mexican government."]];
+  var tabs=document.querySelectorAll(".rail button"),cy=document.getElementById("cy"),ct=document.getElementById("ct"),cb=document.getElementById("cb");
+  var ORDER=[5,4,3,2,1,0];
+  function era(i){ tabs.forEach(function(x){x.setAttribute("aria-selected",+x.dataset.c===i);}); [cy,ct,cb].forEach(function(e){e.classList.add("swap");}); setTimeout(function(){cy.textContent=C[i][0];ct.textContent=C[i][1];cb.textContent=C[i][2];[cy,ct,cb].forEach(function(e){e.classList.remove("swap");});},180); }
+  var cc=cycler(document.querySelector(".tl"),6,5500,function(p){ era(ORDER[p]); },document.getElementById("ccyc"));
+  tabs.forEach(function(b){ b.addEventListener("click",function(){ var i=+b.dataset.c; era(i); cc.set(ORDER.indexOf(i)); }); });
+
+  // letter
+  var L=document.getElementById("letterText"),m=document.getElementById("more");
+  m.addEventListener("click",function(){ var o=L.classList.toggle("open"); m.textContent=o?"Show less":"Read the full letter"; if(!o)L.scrollIntoView({block:"start"}); });
+})();
+</script>
+</body>
+</html>
