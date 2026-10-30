@@ -409,7 +409,7 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
     ["Internal audit reporting to the Audit Committee.","The Audit Committee sees live evidence mapped to ISO/IEC 27001, SOC 2 and the SEC's rules, not a yearly sample."]];
   var nodes=document.querySelectorAll(".node"),howp=document.getElementById("howp");
   function pick(i){ nodes.forEach(function(n){n.classList.toggle("on",n.dataset.i==i);}); howp.classList.add("swap"); setTimeout(function(){ howp.innerHTML="<b>"+HOW[i][0]+"</b> "+HOW[i][1]; howp.classList.remove("swap"); },180); }
-  nodes.forEach(function(n){ n.addEventListener("click",function(){pick(n.dataset.i);}); n.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(n.dataset.i);}}); });
+  nodes.forEach(function(n){ n.addEventListener("mouseenter",function(){ if(!n.classList.contains("on"))pick(n.dataset.i);}); n.addEventListener("focus",function(){ if(!n.classList.contains("on"))pick(n.dataset.i);}); n.addEventListener("click",function(){pick(n.dataset.i);}); n.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(n.dataset.i);}}); });
 
   // generic cycler: runs only in view, pauses on hover/focus, resumes 14s after a click, off under reduced motion
   var RM=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
