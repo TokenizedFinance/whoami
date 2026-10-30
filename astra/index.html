@@ -439,9 +439,9 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
   var LAY=[
     ["Who runs the controls","AI agents, every day","Each control in the catalogue has an agent that runs it, checks it and raises a hand when something drifts. What used to take a team of people on a yearly cycle runs continuously, across Web2 and Web3, in any environment."],
     ["Evidence","Produced as the controls run","Not gathered for the audit. One control set maps to every mandate, including the SEC's, so one piece of evidence serves every regulator and your board at the same time. SOC 2 or ISO 27001 then becomes what it should be: proving controls that already run, at a pace your maturity sets."],
-    ["The standards and the controls under them","Built into my AI","All ten standards, and the control catalogues under them, live in my AI and its knowledge base. The business process of assessing, implementing and keeping the controls, and so defining trust daily, is what the AI runs. Tap a standard to see what sits under it."]];
+    ["The standards and the controls under them","Built into my AI","All ten standards, and the control catalogues under them, live in my AI and its knowledge base. The business process of assessing, implementing and keeping the controls, and so defining trust daily, is what the AI runs. Hover over or tap a standard to see what sits under it."]];
   var layers=document.querySelectorAll(".layer"),det=document.getElementById("detail"),chips=document.getElementById("chips");
-  STD.forEach(function(s,k){ var b=document.createElement("button"); b.type="button"; b.textContent=s[0]; b.dataset.k=k; b.addEventListener("click",function(e){ e.stopPropagation(); layer(2,k); }); chips.appendChild(b); });
+  STD.forEach(function(s,k){ var b=document.createElement("button"); b.type="button"; b.textContent=s[0]; b.dataset.k=k; b.addEventListener("click",function(e){ e.stopPropagation(); layer(2,k); }); b.addEventListener("mouseenter",function(){ if(!b.classList.contains("on"))layer(2,k); }); chips.appendChild(b); });
   function show(html){ det.classList.add("swap"); setTimeout(function(){ det.innerHTML=html; det.classList.remove("swap"); },200); }
   function layer(i,k){
     layers.forEach(function(l){ var on=+l.dataset.l===i; l.classList.toggle("on",on); l.setAttribute("aria-selected",on); });
@@ -449,7 +449,7 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
     if(i===2 && k!=null){ var s=STD[k]; show("<p class='cnt'>"+s[1]+"</p><h3>"+s[0]+"</h3><p>"+s[2]+" My agents run these controls daily and keep the evidence for each one.</p><div class='fam'>"+s[3].map(function(f){return "<span>"+f+"</span>";}).join("")+"</div>"); }
     else { var L2=LAY[i]; show("<p class='cnt'>"+L2[1]+"</p><h3>"+L2[0]+"</h3><p>"+L2[2]+"</p>"); }
   }
-  layers.forEach(function(l){ l.addEventListener("click",function(){ layer(+l.dataset.l); }); l.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); layer(+l.dataset.l); } }); });
+  layers.forEach(function(l){ l.addEventListener("click",function(){ layer(+l.dataset.l); }); l.addEventListener("mouseenter",function(){ if(!l.classList.contains("on"))layer(+l.dataset.l); }); l.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); layer(+l.dataset.l); } }); });
   det.innerHTML="<p class='cnt'>"+LAY[0][1]+"</p><h3>"+LAY[0][0]+"</h3><p>"+LAY[0][2]+"</p>";
 
   // ventures: deal flow, cycling
@@ -462,7 +462,7 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
   function station(i){ sts.forEach(function(b,k){ b.setAttribute("aria-selected",k===i); }); vsay.classList.add("swap"); setTimeout(function(){ vsay.textContent=V[i]; vsay.classList.remove("swap"); },180); }
   vsay.textContent=V[0];
   var vc=cycler(document.getElementById("flow"),4,5000,station,document.getElementById("vcyc"));
-  sts.forEach(function(b,k){ b.addEventListener("click",function(){ station(k); vc.set(k); }); });
+  sts.forEach(function(b,k){ function go(){ if(b.getAttribute("aria-selected")!=="true"){ station(k); vc.set(k); } } b.addEventListener("click",function(){ station(k); vc.set(k); }); b.addEventListener("mouseenter",go); b.addEventListener("focus",go); });
 
   // career timeline
   var C=[
@@ -476,7 +476,7 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
   var ORDER=[5,4,3,2,1,0];
   function era(i){ tabs.forEach(function(x){x.setAttribute("aria-selected",+x.dataset.c===i);}); [cy,ct,cb].forEach(function(e){e.classList.add("swap");}); setTimeout(function(){cy.textContent=C[i][0];ct.textContent=C[i][1];cb.textContent=C[i][2];[cy,ct,cb].forEach(function(e){e.classList.remove("swap");});},180); }
   var cc=cycler(document.querySelector(".tl"),6,5500,function(p){ era(ORDER[p]); },document.getElementById("ccyc"));
-  tabs.forEach(function(b){ b.addEventListener("click",function(){ var i=+b.dataset.c; era(i); cc.set(ORDER.indexOf(i)); }); });
+  tabs.forEach(function(b){ function go(){ var i=+b.dataset.c; era(i); cc.set(ORDER.indexOf(i)); } b.addEventListener("click",go); b.addEventListener("mouseenter",function(){ if(b.getAttribute("aria-selected")!=="true")go(); }); });
 
   // letter
   var L=document.getElementById("letterText"),m=document.getElementById("more");
