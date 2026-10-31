@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
 <style>
 /* OpenZeppelin's own grammar: white and ink panels, one violet accent, Inter with DM Mono labels. One thin orbit. */
-:root{
+:root{--cyan:#08c2ff;
   --navy:#3a40d8; --navy-2:#2a2fa8; --royal:#4f56fa; --gold:#08c2ff; --spg:#d6002a;
   --bg:#ffffff; --panel:#f5f7f8; --ink:#0a0a0a; --text:#313334; --muted:#55595f; --line:#e2e8ea;
   --serif:"Inter",Arial,sans-serif; --sans:"Inter",Arial,sans-serif; --mono:"DM Mono",ui-monospace,monospace;
@@ -198,23 +198,48 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
 /* claim band: evidence, not the model + UOB */
 .claim{position:relative;overflow:hidden;background:linear-gradient(135deg,#2a2fb0,#3a40d8 55%,#2f6fd0);color:#e9ecff;padding:96px 0}
 .claim .names{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);align-content:center;gap:40px 10px;padding:40px;text-align:center;pointer-events:none}
-.claim .names span{font-weight:600;font-size:clamp(1rem,2vw,1.4rem);color:rgba(255,255,255,.38);transition:opacity 1.1s var(--ease),filter 1.1s var(--ease)}
+.claim .names span{font-weight:600;font-size:clamp(1rem,2vw,1.4rem);color:rgba(255,255,255,.5);transition:opacity 1.1s var(--ease),filter 1.1s var(--ease)}
 .claim .names span.gone{opacity:0;filter:blur(8px)}
 .claim .big{position:relative;font-size:clamp(2.6rem,7.5vw,5.6rem);line-height:1;font-weight:800;letter-spacing:-.04em;color:#fff;max-width:14ch}
-.claim .big em{font-style:normal;color:#bfc8ff}
+.claim .big em{font-style:normal;color:#c9cfff;text-shadow:0 0 28px rgba(79,86,250,.55)}
 .claim .uob{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;margin-top:64px}
 .claim blockquote{font-size:clamp(1.3rem,2.6vw,1.85rem);line-height:1.3;font-weight:600;color:#fff;text-wrap:balance}
-.claim .src{margin-top:14px;font-size:.92rem;color:#a9b0e0}
+.claim .src{margin-top:14px;font-size:.92rem;color:#d6daff}
 .claim .src a{color:#c7cbff;text-underline-offset:3px}
 .meter{display:flex;flex-direction:column;gap:22px}
-.meter p{font-size:.95rem;color:#c7cbff;margin-bottom:8px}
-.meter .bar{height:14px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.meter p{font-size:1rem;color:#fff;font-weight:500;margin-bottom:8px}
+.meter .bar{height:16px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden}
 .meter .bar i{display:block;height:100%;width:0;border-radius:999px;transition:width 1.6s var(--ease)}
-.meter .a i{background:rgba(255,255,255,.4)}.meter .b i{background:linear-gradient(90deg,#4f56fa,#08c2ff)}
+.meter .a i{background:#a4abe6}.meter .b i{background:linear-gradient(90deg,#6b72ff,#2fd0ff);box-shadow:0 0 22px rgba(47,208,255,.6)}
 .claim.on .meter .a i{width:28%}.claim.on .meter .b i{width:94%}
-.meter .ill{font-size:.85rem;color:#c7cbff;font-style:italic;margin:0}
-.meter small{display:block;font-size:.85rem;color:#8a90c2;margin-top:4px}
+.meter .ill{font-size:.85rem;color:#dfe3ff;font-style:italic;margin:0}
+.meter small{display:block;font-size:.9rem;color:#dfe3ff;margin-top:6px}
 @media (max-width:860px){.claim .uob{grid-template-columns:1fr;gap:32px}.claim .names{grid-template-columns:repeat(2,1fr)}.claim{padding:72px 0}}
+/* layer illustrations (hover a layer: a moving picture of what happens) */
+.ill-svg{display:block;width:100%;max-width:460px;height:auto;margin:0 0 18px;border-radius:10px;background:var(--panel);border:1px solid var(--line)}
+.ill-svg text{font-family:var(--sans)}
+@keyframes orbit{to{transform:rotate(360deg)}}
+@keyframes orbitr{to{transform:rotate(-360deg)}}
+@keyframes blink{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes tick{0%,60%{opacity:0;transform:scale(.6)}75%,100%{opacity:1;transform:scale(1)}}
+@keyframes flow{to{offset-distance:100%}}
+@keyframes stamp{0%,55%{opacity:0;transform:scale(1.4)}70%,100%{opacity:1;transform:scale(1)}}
+@keyframes rise{0%{opacity:0;transform:translateY(8px)}30%,100%{opacity:1;transform:none}}
+@keyframes slide{to{transform:translateX(-50%)}}
+.ill-svg .agent{transform-origin:200px 124px;animation:orbit 18s linear infinite}
+.ill-svg .agent.r{animation:orbitr 26s linear infinite}
+.ill-svg .agent circle.b{animation:blink 2.4s var(--ease) infinite}
+.ill-svg .ok{transform-origin:center;transform-box:fill-box;animation:tick 4s var(--ease) infinite}
+.ill-svg .dot{offset-rotate:0deg;animation:flow 3.6s linear infinite}
+.ill-svg .ledger rect{transform-box:fill-box;transform-origin:left;animation:rise 6s var(--ease) infinite}
+.ill-svg .seal{transform-box:fill-box;transform-origin:center;animation:stamp 6s var(--ease) infinite}
+.ill-wrap{overflow:hidden;border-radius:10px;background:var(--panel);border:1px solid var(--line);margin:0 0 18px;padding:14px 0;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.ill-row{display:flex;gap:10px;width:max-content;animation:slide 28s linear infinite}
+.ill-row:nth-child(2){animation-duration:36s;animation-direction:reverse;margin-top:10px}
+.ill-row span{display:inline-block;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:8px 14px;font-size:.86rem;font-weight:600;color:var(--ink);white-space:nowrap}
+.ill-row span.ai{color:var(--royal);border-color:var(--royal)}
+.ill-wrap:hover .ill-row{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.ill-svg *,.ill-row{animation:none!important}}
 /* close */
 .contact{background:linear-gradient(135deg,#3a40d8,#4f56fa 60%,#2f8fe0);color:#fff;padding:64px 0}
 .contact .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px}
@@ -259,7 +284,7 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
       <h1 class="in">AI-led security and governance for onchain finance</h1>
       <p class="lead in">OpenZeppelin needs its own security program to be audit-ready, globally, while the company adopts AI safely. I do this work today, with AI agents: controls that run every day and prove themselves to auditors, regulators and the board.</p>
       <blockquote class="hq in">Evidence, not the model.</blockquote>
-      <p class="hqby in">Evidence by Design: proof built into every system from the first day.</p>
+      <p class="hqby in">Evidence by Design: proof built into every system from the first day. “Trust, but verify,” as Ronald Reagan put it.</p>
       <div class="player in" id="player">
         <button type="button" id="pp" aria-label="Play my pitch"><svg id="ic" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg></button>
         <div class="meta"><strong>Hear my 2-minute pitch</strong><span id="time">AI-narrated · about 2 min</span></div>
@@ -348,7 +373,7 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
 <section id="how">
   <div class="wrap">
     <div class="head">
-      <h2>The question is how. The answer is AI.</h2>
+      <h2>The question is how? The answer is AI</h2>
       <p>Standards such as NIST, ISO 27001 and ISO 42001 define the policies, the controls and the evidence. Together they are the single source of truth: the canonical data your AI should act on, so it does not make things up or drift. Doing this by hand takes a team on a yearly cycle. I run it as three layers, with AI governance and AI security tooling, across Web2 and Web3, in any environment. Hover over a layer, or a standard, to see what sits inside.</p>
     </div>
     <div class="stack">
@@ -504,17 +529,44 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
     ["Who runs the controls","AI agents, every day","Each control in the catalogue has an agent that runs it, checks it and raises a hand when something drifts. What used to take a team of people on a yearly cycle runs continuously, across Web2 and Web3, in any environment."],
     ["Evidence","Produced as the controls run","Not gathered for the audit. The requirements are the single source of truth: every standard, control and regulation that applies to OpenZeppelin maps to one control set, so one piece of evidence serves auditors, regulators, the board and enterprise customers at the same time. Any certification then becomes what it should be: proving controls that already run, at a pace your maturity sets."],
     ["Standards, controls and regulations","Built into my AI","Every standard, control catalogue and regulatory mandate here lives in my AI and its knowledge base. The business process of assessing, implementing and keeping the controls, and so defining trust daily, is what the AI runs. Hover over or tap a standard to see what sits under it."]];
+  // layer illustrations
+  function illAgents(){
+    var a="";
+    for(var i=0;i<6;i++){ var ang=i/6*Math.PI*2, r=58, x=200+Math.cos(ang)*r, y=124+Math.sin(ang)*r;
+      a+='<g class="agent" style="animation-delay:-'+(i*3)+'s"><circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="13" fill="var(--bg)" stroke="var(--royal)" stroke-width="1.5"/><circle class="b" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="4" fill="var(--royal)" style="animation-delay:'+(i*.4)+'s"/></g>'; }
+    var c="";
+    var labels=["Access","Keys","Logs","Vendors","Backups","Change"];
+    for(var j=0;j<6;j++){ var an=j/6*Math.PI*2+Math.PI/6, R=104, X=200+Math.cos(an)*R*1.45, Y=124+Math.sin(an)*R*0.78;
+      c+='<g><rect x="'+(X-26).toFixed(1)+'" y="'+(Y-10).toFixed(1)+'" width="52" height="20" rx="4" fill="var(--bg)" stroke="var(--line)"/><text x="'+X.toFixed(1)+'" y="'+(Y+4).toFixed(1)+'" font-size="9" text-anchor="middle" fill="var(--muted)">'+labels[j]+'</text><path class="ok" d="M'+(X+18).toFixed(1)+' '+(Y-14).toFixed(1)+'l3 3 5-6" fill="none" stroke="var(--cyan,#08c2ff)" stroke-width="2.2" stroke-linecap="round" style="animation-delay:'+(j*.65)+'s"/></g>'; }
+    return '<svg class="ill-svg" viewBox="0 0 400 248" role="img" aria-label="A team of AI agents circling the controls, each check ticking green"><circle cx="200" cy="124" r="58" fill="none" stroke="var(--line)" stroke-dasharray="3 5"/><ellipse cx="200" cy="124" rx="151" ry="81" fill="none" stroke="var(--line)"/>'+c+a+'<circle cx="200" cy="124" r="26" fill="var(--royal)"/><text x="200" y="121" font-size="9" fill="#fff" text-anchor="middle" font-weight="600">controls</text><text x="200" y="133" font-size="9" fill="#fff" text-anchor="middle">every day</text><text x="200" y="240" font-size="10" fill="var(--ink)" text-anchor="middle" font-weight="600">A team of AI agents runs every control, every day, and raises a hand on drift.</text></svg>';
+  }
+  function illEvidence(){
+    var lanes="",y0=34;
+    var acts=["approve payment","rotate key","grant access","close ticket","update rule"];
+    for(var i=0;i<5;i++){ var y=y0+i*34;
+      lanes+='<circle cx="34" cy="'+y+'" r="9" fill="var(--bg)" stroke="var(--royal)" stroke-width="1.5"/><text x="52" y="'+(y+4)+'" font-size="9" fill="var(--muted)">'+acts[i]+'</text><line x1="150" y1="'+y+'" x2="236" y2="'+y+'" stroke="var(--line)"/><circle class="dot" r="3.5" fill="var(--royal)" style="offset-path:path(\'M150 '+y+' L236 '+y+'\');animation-delay:-'+(i*.7)+'s"/>';
+      lanes+='<g class="ledger"><rect x="300" y="'+(y-7)+'" width="80" height="14" rx="3" fill="var(--royal)" opacity=".9" style="animation-delay:'+(i*1.1)+'s"/></g><text x="306" y="'+(y+3.5)+'" font-size="8" fill="#fff" font-family="DM Mono,monospace">'+["a91f","7c02","e3b8","4d61","f20a"][i]+'… ✓</text>';
+    }
+    return '<svg class="ill-svg" viewBox="0 0 400 220" role="img" aria-label="Five agents act, each action is verified with a mathematical check, then written to an evidence ledger"><text x="34" y="14" font-size="9" fill="var(--muted)" text-anchor="middle">agents</text><text x="266" y="14" font-size="9" fill="var(--muted)" text-anchor="middle">verify</text><text x="340" y="14" font-size="9" fill="var(--muted)" text-anchor="middle">evidence ledger</text>'+lanes+'<rect x="240" y="22" width="52" height="176" rx="8" fill="var(--bg)" stroke="var(--royal)" stroke-width="1.5"/><text x="266" y="96" font-size="18" fill="var(--royal)" text-anchor="middle" font-weight="700">Σ</text><text x="266" y="114" font-size="8" fill="var(--muted)" text-anchor="middle">hash +</text><text x="266" y="124" font-size="8" fill="var(--muted)" text-anchor="middle">policy</text><text x="266" y="134" font-size="8" fill="var(--muted)" text-anchor="middle">check</text><g class="seal"><circle cx="266" cy="178" r="12" fill="var(--cyan,#08c2ff)"/><path d="M260 178l4 4 8-9" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></g><text x="200" y="214" font-size="10" fill="var(--ink)" text-anchor="middle" font-weight="600">“Trust, but verify.” Ronald Reagan. Every action, proven with math.</text></svg>';
+  }
+  function illStandards(){
+    var row1=["NIST CSF 2.0","ISO/IEC 27001","SOC 1 and SOC 2","CIS Controls v8","NIST SP 800-53","MITRE ATT&CK","GDPR","DORA","MiCA"];
+    var row2=["ISO/IEC 42001","NIST AI RMF","EU AI Act","MITRE ATLAS","GENIUS Act","AML, KYC, Travel Rule","CISA CPGs","Bank of Thailand AI guidelines"];
+    function r(a,ai){ var h=a.concat(a).map(function(x){return "<span"+(ai&&/42001|AI RMF|AI Act|ATLAS/.test(x)?" class=\"ai\"":"")+">"+x+"</span>";}).join(""); return '<div class="ill-row">'+h+'</div>'; }
+    return '<div class="ill-wrap" aria-label="The standards and regulations, moving: they are the single source of truth">'+r(row1,false)+r(row2,true)+'</div>';
+  }
+  var ILL=[illAgents,illEvidence,illStandards];
   var layers=document.querySelectorAll(".layer"),det=document.getElementById("detail"),chips=document.getElementById("chips");
   STD.forEach(function(s,k){ var b=document.createElement("button"); b.type="button"; b.textContent=s[0]; b.dataset.k=k; b.addEventListener("click",function(e){ e.stopPropagation(); layer(2,k); }); b.addEventListener("mouseenter",function(){ if(!b.classList.contains("on"))layer(2,k); }); chips.appendChild(b); });
   function show(html){ det.classList.add("swap"); setTimeout(function(){ det.innerHTML=html; det.classList.remove("swap"); },200); }
   function layer(i,k){
     layers.forEach(function(l){ var on=+l.dataset.l===i; l.classList.toggle("on",on); l.setAttribute("aria-selected",on); });
     chips.querySelectorAll("button").forEach(function(b){ b.classList.toggle("on", i===2 && +b.dataset.k===k); });
-    if(i===2 && k!=null){ var s=STD[k]; show("<p class='cnt'>"+s[1]+"</p><h3>"+s[0]+"</h3><p>"+s[2]+" My agents run these controls daily and keep the evidence for each one.</p><div class='fam'>"+s[3].map(function(f){return "<span>"+f+"</span>";}).join("")+"</div>"); }
-    else { var L2=LAY[i]; show("<p class='cnt'>"+L2[1]+"</p><h3>"+L2[0]+"</h3><p>"+L2[2]+"</p>"); }
+    if(i===2 && k!=null){ var s=STD[k]; show(ILL[2]()+"<p class='cnt'>"+s[1]+"</p><h3>"+s[0]+"</h3><p>"+s[2]+" My agents run these controls daily and keep the evidence for each one.</p><div class='fam'>"+s[3].map(function(f){return "<span>"+f+"</span>";}).join("")+"</div>"); }
+    else { var L2=LAY[i]; show(ILL[i]()+"<p class='cnt'>"+L2[1]+"</p><h3>"+L2[0]+"</h3><p>"+L2[2]+"</p>"); }
   }
   layers.forEach(function(l){ l.addEventListener("click",function(){ layer(+l.dataset.l); }); l.addEventListener("mouseenter",function(){ if(!l.classList.contains("on"))layer(+l.dataset.l); }); l.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); layer(+l.dataset.l); } }); });
-  det.innerHTML="<p class='cnt'>"+LAY[0][1]+"</p><h3>"+LAY[0][0]+"</h3><p>"+LAY[0][2]+"</p>";
+  det.innerHTML=ILL[0]()+"<p class='cnt'>"+LAY[0][1]+"</p><h3>"+LAY[0][0]+"</h3><p>"+LAY[0][2]+"</p>";
 
   // ventures: deal flow, cycling
   var V=[
