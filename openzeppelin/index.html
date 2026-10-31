@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Ricardo Diaz for OpenZeppelin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* OpenZeppelin's own grammar: white and ink panels, one violet accent, Inter with DM Mono labels. One thin orbit. */
+:root{
+  --navy:#3a40d8; --navy-2:#2a2fa8; --royal:#4f56fa; --gold:#08c2ff; --spg:#d6002a;
+  --bg:#ffffff; --panel:#f5f7f8; --ink:#0a0a0a; --text:#313334; --muted:#55595f; --line:#e2e8ea;
+  --serif:"Inter",Arial,sans-serif; --sans:"Inter",Arial,sans-serif; --mono:"DM Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.23,1,.32,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0a0a;--panel:#111426;--ink:#ffffff;--text:#e2e8ea;--muted:#a0aeb5;--line:#1f2333;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0a0a0a;--panel:#111426;--ink:#ffffff;--text:#e2e8ea;--muted:#a0aeb5;--line:#1f2333;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+::selection{background:var(--royal);color:#fff}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p{margin:0}
+h1,h2{font-family:var(--serif);font-weight:600;letter-spacing:-.025em;color:var(--ink);text-wrap:balance}
+h1{font-size:clamp(2.4rem,4.6vw,3.6rem);line-height:1.02;letter-spacing:-.01em}
+h2{font-size:clamp(1.8rem,3.2vw,2.5rem);line-height:1.08}
+h3{font-size:1.02rem;font-weight:600;color:var(--ink)}
+a{color:var(--royal);text-underline-offset:3px}
+.wrap{max-width:70rem;margin:0 auto;padding:0 20px}
+button{font:inherit;cursor:pointer;transition:transform .16s var(--ease),background .2s,color .2s,border-color .2s}
+button:active{transform:scale(.97)}
+:focus-visible{outline:3px solid var(--royal);outline-offset:3px;border-radius:4px}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-thumb{background:var(--line);border-radius:10px}
+svg{display:block}
+
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:22px;height:60px;white-space:nowrap;overflow-x:auto;scrollbar-width:none}
+nav b{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);margin-right:auto}
+nav a{color:var(--muted);text-decoration:none;font-size:.86rem;font-weight:500}
+nav a:hover{color:var(--royal)}
+
+/* hero: thesis on the left, the mechanism running on the right */
+.hero{padding:56px 0 48px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+.hero .who{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.hero .who img{width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:50% 40%}
+.hero .who b{display:block;color:var(--ink);font-weight:600;font-size:.98rem}
+.hero .who span{font-size:.84rem;color:var(--muted)}
+.hero p.lead{margin-top:20px;font-size:1.08rem;max-width:34rem}
+.player{margin-top:28px;display:inline-flex;align-items:center;gap:14px;padding:8px 18px 8px 8px;border:1px solid var(--line);border-radius:999px;background:var(--bg);max-width:100%}
+.player button{width:46px;height:46px;border-radius:50%;border:0;background:var(--navy);color:#fff;display:grid;place-items:center;flex:none}
+.player button:hover{background:var(--royal)}
+.player .meta{font-size:.8rem;color:var(--muted);line-height:1.3}
+.player .meta strong{display:block;color:var(--ink);font-weight:600;font-size:.88rem}
+.player .bar{height:3px;width:120px;background:var(--line);border-radius:3px;overflow:hidden}
+.player .bar i{display:block;height:100%;width:0;background:var(--royal);transition:width .25s linear}
+
+/* orbit */
+.orbit{position:relative;aspect-ratio:1;max-width:560px;margin:0 auto;width:100%}
+.orbit svg{width:100%;height:100%;overflow:visible}
+.orbit .ring{fill:none;stroke:var(--line);stroke-width:1.2}
+.orbit .spoke{stroke:var(--royal);stroke-width:1.4;stroke-dasharray:4 6;opacity:.55}
+.orbit .core{fill:url(#coreg)}
+.orbit .core-t{font-family:var(--serif);font-size:30px;font-weight:600;fill:#fff;text-anchor:middle}
+.orbit .core-s{font-family:var(--sans);font-size:12.5px;fill:#fff;text-anchor:middle;letter-spacing:.02em}
+.orbit .pulse{fill:var(--royal)}
+.orbit .node{cursor:pointer}
+.orbit .node circle{fill:var(--bg);stroke:var(--navy);stroke-width:1.5;transition:fill .2s,stroke .2s,r .2s var(--ease)}
+.orbit .node text{font-family:var(--sans);font-size:13px;font-weight:500;fill:var(--ink);text-anchor:middle;pointer-events:none}
+.orbit .node:hover circle,.orbit .node.on circle{fill:var(--royal);stroke:var(--royal)}
+.orbit .node.on text,.orbit .node:hover text{fill:#fff}
+.orbit .node:focus,.orbit .node:focus-visible{outline:none}
+.orbit .node:focus-visible circle{stroke:var(--gold);stroke-width:3}
+.orbit .std{font-family:var(--mono);font-size:12px;fill:var(--muted);text-anchor:middle;letter-spacing:.04em}
+.orbit .cap{font-family:var(--sans);font-size:12.5px;fill:var(--muted);text-anchor:middle}
+.how{margin-top:14px;min-height:6rem;border-top:3px solid var(--spg);padding-top:14px;font-size:1.1rem;line-height:1.55}
+.how b{color:var(--royal);font-weight:600}
+.how p{transition:opacity .22s var(--ease),filter .22s var(--ease)}
+.how p.swap{opacity:0;filter:blur(2px)}
+@media (prefers-reduced-motion:no-preference){
+  .orbit .pulse{animation:travel 2.6s var(--ease) infinite}
+  .orbit .pulse.p2{animation-delay:.65s}.orbit .pulse.p3{animation-delay:1.3s}.orbit .pulse.p4{animation-delay:1.95s}
+  @keyframes travel{0%{offset-distance:0%;opacity:0}12%{opacity:1}88%{opacity:1}100%{offset-distance:100%;opacity:0}}
+  .orbit .ringspin{transform-origin:280px 280px;animation:spin 90s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+}
+
+/* sections */
+section{padding:72px 0}
+section.panel{background:var(--panel)}
+.head{max-width:44rem;margin-bottom:34px;display:flex;flex-direction:column;gap:14px}
+
+/* trust: navy block */
+.trust{background:linear-gradient(135deg,#3a40d8,#4f56fa 60%,#2f8fe0);color:#fff;padding:72px 0}
+.trust h2{color:#fff}
+.trust p{color:#fff;opacity:.92}
+.trust .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.chain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.chain li{display:grid;grid-template-columns:28px 1fr;gap:16px;align-items:start;padding:14px 0;border-top:1px solid rgba(255,255,255,.14);color:#ebeff1;font-size:1rem}
+.chain li:first-child{border-top:0}
+.chain li i{display:block;width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);margin-top:1px}
+.chain li:last-child{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:#fff;align-items:center}
+.chain li:last-child i{background:var(--gold);border-color:var(--gold)}
+
+/* how: three layers, one detail */
+.stack{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:start;margin-top:6px}
+.layers{position:relative;display:flex;flex-direction:column;gap:10px;padding-left:26px}
+.layers::before{content:"";position:absolute;left:5px;top:22px;bottom:22px;width:1px;background:var(--line)}
+.layer{position:relative;text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:18px 20px;display:grid;grid-template-columns:1fr;gap:4px;color:var(--ink);transition:transform .3s var(--ease),background .3s var(--ease),border-color .3s,box-shadow .3s var(--ease);cursor:pointer;font:inherit}
+.layer::before{content:"";position:absolute;left:-26px;top:22px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:1.5px solid var(--navy);transition:background .2s,border-color .2s,transform .2s var(--ease)}
+.layer:hover{transform:translateX(4px);border-color:var(--navy)}
+.layer.on{background:var(--navy);border-color:var(--navy);color:#fff;transform:translateX(8px);box-shadow:0 22px 44px -26px rgba(17,20,38,.6)}
+.layer.on::before{background:var(--royal);border-color:var(--royal);transform:scale(1.25)}
+.layer .n{font-weight:600;font-size:1.04rem}
+.layer .d{font-size:.88rem;color:var(--muted)}
+.layer.on .d{color:#c7d1d6}
+.layer .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.layer .chips button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:5px 11px;font-size:.8rem;color:var(--muted);font:inherit;font-size:.8rem;transition:background .2s,color .2s,border-color .2s,transform .16s var(--ease)}
+.layer .chips button:hover{border-color:var(--royal);color:var(--royal)}
+.layer .chips button:active{transform:scale(.97)}
+.layer.on .chips button{border-color:rgba(255,255,255,.35);color:#ebeff1}
+.layer.on .chips button:hover,.layer.on .chips button.on{background:var(--royal);border-color:var(--royal);color:#fff}
+.detail{position:sticky;top:84px;min-height:18rem}
+.detail h3{font-family:var(--serif);font-size:1.7rem;font-weight:600;line-height:1.15;margin-bottom:12px}
+.detail .cnt{color:var(--royal);font-weight:600;font-size:.9rem;margin-bottom:8px}
+.detail p{font-size:1rem}
+.fam{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.fam span{border:1px solid var(--line);border-radius:4px;padding:4px 9px;font-size:.8rem;color:var(--ink);background:var(--panel)}
+.detail>*{transition:opacity .22s var(--ease),filter .22s var(--ease),transform .22s var(--ease)}
+.detail.swap>*{opacity:0;filter:blur(2px);transform:translateY(4px)}
+
+/* proof line */
+.proof{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:40px 0 0}
+.proof div{padding:22px 24px 22px 0;display:flex;gap:16px;align-items:baseline}
+.proof div+div{border-left:1px solid var(--line);padding-left:24px}
+.proof em{font-family:var(--serif);font-style:normal;font-size:2rem;white-space:nowrap;line-height:1;color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.proof p{font-size:.92rem}
+
+.models{display:flex;flex-direction:column;gap:10px}.models div{display:grid;grid-template-columns:112px 1fr;gap:10px;align-items:start}.models em{font-style:normal;display:flex;flex-wrap:wrap;gap:6px}.models b{padding-top:7px;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--spg);font-weight:600}.models span{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:.9rem;color:var(--ink);transition:border-color .2s,transform .2s var(--ease)}.models span:hover{border-color:var(--royal);transform:translateY(-2px)}
+/* mekong */
+.mekong .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:center}
+blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);line-height:1.15;color:var(--ink);font-weight:500;font-style:italic}
+.by{margin-top:14px;font-size:.86rem;color:var(--muted)}
+
+/* ventures: deal flow */
+.flow{position:relative;margin-top:14px}
+.flow .line{position:absolute;left:8%;right:8%;top:44px;height:1px;background:var(--line)}
+.flow .dot{position:absolute;top:40px;width:9px;height:9px;border-radius:50%;background:var(--royal);left:8%;animation:travel 6s linear infinite;box-shadow:0 0 0 4px rgba(79,86,250,.12)}
+@keyframes travel{0%{left:8%;opacity:0}6%{opacity:1}94%{opacity:1}100%{left:calc(92% - 9px);opacity:0}}
+.flow .stations{display:grid;grid-template-columns:repeat(4,1fr);position:relative}
+.station{background:none;border:0;padding:0;text-align:center;color:var(--muted);font:inherit;display:grid;justify-items:center;gap:12px;cursor:pointer}
+.station i{display:grid;place-items:center;width:88px;height:88px;border-radius:50%;background:var(--bg);border:1.5px solid var(--navy);color:var(--navy);font-style:normal;font-weight:600;font-size:.95rem;transition:background .25s var(--ease),color .25s,transform .3s var(--ease),box-shadow .3s var(--ease)}
+.station:hover i{transform:translateY(-3px)}
+.station:active i{transform:scale(.97)}
+.station[aria-selected="true"] i{background:var(--royal);border-color:var(--royal);color:#fff;transform:scale(1.08);box-shadow:0 18px 36px -22px rgba(79,86,250,.7)}
+.station small{font-size:.84rem;line-height:1.3;max-width:11rem}
+.station[aria-selected="true"] small{color:var(--ink);font-weight:600}
+.flow .say{margin:34px auto 0;max-width:42rem;text-align:center;min-height:5.2rem}
+.flow .say p{font-size:1.08rem;color:var(--ink);transition:opacity .22s var(--ease),filter .22s var(--ease)}
+.flow .say p.swap{opacity:0;filter:blur(2px)}
+.cyc{height:2px;background:var(--line);border-radius:2px;overflow:hidden;margin:18px auto 0;max-width:12rem}
+.cyc i{display:block;height:100%;width:0;background:var(--royal);transition:width .2s linear}
+
+/* career timeline */
+.tl{position:relative;margin-top:10px}
+.tl .rail{display:grid;grid-template-columns:repeat(6,1fr);position:relative;padding-top:22px}
+.tl .rail::before{content:"";position:absolute;left:0;right:0;top:8px;height:1px;background:var(--line)}
+.tl .rail button{background:none;border:0;text-align:left;padding:0 10px 0 0;color:var(--muted);font-size:.84rem;position:relative}
+.tl .rail button::before{content:"";position:absolute;top:-19px;left:0;width:11px;height:11px;border-radius:50%;background:var(--bg);border:1.5px solid var(--navy);transition:background .2s,transform .2s var(--ease)}
+.tl .rail button[aria-selected="true"]{color:var(--ink);font-weight:600}
+.tl .rail button[aria-selected="true"]::before{background:var(--royal);border-color:var(--royal);transform:scale(1.25)}
+.tl .body{margin-top:26px;display:grid;grid-template-columns:11rem 1fr;gap:28px;min-height:8rem}
+.tl .yrs{font-family:var(--serif);font-size:1.5rem;color:var(--ink);line-height:1.15}
+.tl .body p{transition:opacity .22s var(--ease),filter .22s var(--ease)}
+.tl .body .swap{opacity:0;filter:blur(2px)}
+.tl .cyc{margin:22px 0 0;max-width:12rem}
+
+/* letter */
+.letter{position:relative;max-width:48rem;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:34px 36px;max-height:360px;overflow:hidden;transition:max-height .6s var(--ease)}
+.letter p{margin-bottom:14px;font-size:.98rem}
+.letter.open{max-height:5000px}
+.letter:not(.open)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:140px;background:linear-gradient(transparent,var(--bg))}
+.more{margin-top:16px;background:none;border:1px solid var(--navy);color:var(--navy);border-radius:999px;padding:10px 20px;font-weight:600;font-size:.9rem}
+.more:hover{background:var(--navy);color:#fff}
+
+/* close */
+.contact{background:linear-gradient(135deg,#3a40d8,#4f56fa 60%,#2f8fe0);color:#fff;padding:64px 0}
+.contact .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px}
+.contact h2{color:#fff}
+.contact p{color:#c7d1d6;font-size:.92rem;margin-top:8px}
+.contact a.btn{display:inline-block;background:#fff;color:var(--navy);text-decoration:none;font-weight:600;padding:13px 24px;border-radius:999px;margin-right:10px;transition:transform .16s var(--ease)}
+.contact a.btn:active{transform:scale(.97)}
+.contact a.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.55)}
+
+@media (prefers-reduced-motion:no-preference){
+  .hero .in{opacity:0;transform:translateY(10px);animation:in .7s var(--ease) forwards}
+  .hero .in:nth-child(2){animation-delay:.06s}.hero .in:nth-child(3){animation-delay:.12s}.hero .in:nth-child(4){animation-delay:.18s}
+  @keyframes in{to{opacity:1;transform:none}}
+}
+@media (max-width:860px){
+  .hero .wrap,.trust .wrap,.mekong .wrap{grid-template-columns:1fr;gap:34px}
+  .orbit{max-width:420px}
+  .proof,.stack{grid-template-columns:1fr}
+  .proof div+div{border-left:0;padding-left:0;border-top:1px solid var(--line)}
+  .proof div{padding:18px 0}
+  .stack{gap:28px}.detail{position:static;min-height:0}
+  .flow .stations{grid-template-columns:repeat(2,1fr);gap:22px 8px}.flow .line,.flow .dot{display:none}.station i{width:76px;height:76px;font-size:.88rem}
+  .row{grid-template-columns:1fr;gap:6px}
+  .tl .rail{grid-template-columns:repeat(3,1fr);row-gap:28px}
+  .tl .body{grid-template-columns:1fr;gap:10px}
+  .letter{padding:24px 20px}
+  section{padding:56px 0}
+}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <b>Ricardo G. Diaz</b>
+  <a href="#trust">Trust</a><a href="#how">How</a><a href="#ventures">Ventures</a><a href="#career">Career</a><a href="#letter">Letter</a><a href="#contact">Contact</a>
+</div></nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <div class="who in"><img src="photo.jpg" alt="Ricardo G. Diaz"><div><b>Ricardo G. Diaz</b><span>For the OpenZeppelin hiring team · Head of IT &amp; Security</span></div></div>
+      <h1 class="in">AI-led security and governance for onchain finance</h1>
+      <p class="lead in">OpenZeppelin needs its own security program to be audit-ready, globally, while the company adopts AI safely. I do this work today, with AI agents: controls that run every day and prove themselves to auditors, regulators and the board.</p>
+      <div class="player in" id="player">
+        <button type="button" id="pp" aria-label="Play my letter"><svg id="ic" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg></button>
+        <div class="meta"><strong>Hear my letter</strong><span id="time">AI-narrated · about 5 min</span></div>
+        <div class="bar" aria-hidden="true"><i id="prog"></i></div>
+      </div>
+      <audio id="aud" src="letter.mp3" preload="none"></audio>
+    </div>
+
+    <div>
+      <div class="orbit" id="orbit" role="group" aria-label="Four parts of the role, run every day by AI agents, feeding evidence to the centre: trust">
+        <svg viewBox="0 0 560 560">
+          <g class="ringspin"><circle class="ring" cx="280" cy="280" r="262"/></g>
+          <circle class="ring" cx="280" cy="280" r="180"/>
+          <circle class="ring" cx="280" cy="280" r="92" style="stroke-dasharray:2 5"/>
+          <!-- standards on the outer ring -->
+          <text class="std" x="280" y="18">NIST CSF</text>
+          <text class="std" x="500" y="150">ISO/IEC 27001</text>
+          <text class="std" x="520" y="420">SOC 1 and SOC 2</text>
+          <text class="std" x="280" y="552">MITRE ATT&amp;CK and ATLAS</text>
+          <text class="std" x="40" y="420">ISO/IEC 42001</text>
+          <text class="std" x="60" y="150">NIST AI RMF</text>
+          <!-- spokes -->
+          <line class="spoke" x1="280" y1="100" x2="280" y2="210"/>
+          <line class="spoke" x1="460" y1="280" x2="350" y2="280"/>
+          <line class="spoke" x1="280" y1="460" x2="280" y2="350"/>
+          <line class="spoke" x1="100" y1="280" x2="210" y2="280"/>
+          <!-- evidence pulses -->
+          <circle class="pulse p1" r="4" style="offset-path:path('M280 100 L280 212')"/>
+          <circle class="pulse p2" r="4" style="offset-path:path('M460 280 L348 280')"/>
+          <circle class="pulse p3" r="4" style="offset-path:path('M280 460 L280 348')"/>
+          <circle class="pulse p4" r="4" style="offset-path:path('M100 280 L212 280')"/>
+          <!-- core -->
+          <defs><linearGradient id="coreg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f56fa"/><stop offset="1" stop-color="#08c2ff"/></linearGradient></defs><circle class="core" cx="280" cy="280" r="68"/>
+          <text class="core-t" x="280" y="282">Trust</text>
+          <text class="core-s" x="280" y="304">proven every day</text>
+          <!-- nodes -->
+          <g class="node on" data-i="0" tabindex="0" role="button" aria-label="Enterprise trust and audit">
+            <circle cx="280" cy="100" r="42"/><text x="280" y="97">Enterprise</text><text x="280" y="111">trust</text></g>
+          <g class="node" data-i="1" tabindex="0" role="button" aria-label="AI governance">
+            <circle cx="460" cy="280" r="42"/><text x="460" y="277">AI</text><text x="460" y="291">governance</text></g>
+          <g class="node" data-i="2" tabindex="0" role="button" aria-label="Privacy and data map">
+            <circle cx="280" cy="460" r="42"/><text x="280" y="457">Privacy</text><text x="280" y="471">data map</text></g>
+          <g class="node" data-i="3" tabindex="0" role="button" aria-label="Incident response">
+            <circle cx="100" cy="280" r="42"/><text x="100" y="277">Incident</text><text x="100" y="291">response</text></g>
+          <text class="cap" x="280" y="536">Four parts of the Head of IT &amp; Security role. Hover or tap one.</text>
+        </svg>
+      </div>
+      <div class="how" aria-live="polite"><p id="howp"><b>Enterprise trust and audit.</b> OpenZeppelin's own program, run to every standard, control and regulation that applies to the company. Evidence is produced as the controls run, so every audit and every diligence request gets clear answers.</p></div>
+    </div>
+  </div>
+</header>
+
+<div class="trust" id="trust">
+  <div class="wrap">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <h2>OpenZeppelin sets the security standard. Its own program has to meet it.</h2>
+      <p>OpenZeppelin calls itself "the security standard onchain finance is built on." As Head of IT &amp; Security, my job is OpenZeppelin's own security, globally: the people, systems, data and AI the company runs on. The standards, controls and regulations that apply to the company become the single source of truth for how we work. What we build inside is also what auditors, regulators and enterprise customers will test.</p>
+    </div>
+    <ol class="chain">
+      <li><i></i>Requirements: standards, controls and regulations</li><li><i></i>Controls that run every day</li>
+      <li><i></i>Evidence, produced as the work happens</li>
+      <li><i></i>Assurance for auditors, regulators and the board</li>
+      <li><i></i>Trust that holds up in every diligence</li>
+    </ol>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="head">
+      <h2>The question is how. The answer is AI.</h2>
+      <p>Doing this by hand takes a team on a yearly cycle. I run it as three layers, with AI governance and AI security tooling, across Web2 and Web3, in any environment. Hover over a layer, or a standard, to see what sits inside.</p>
+    </div>
+    <div class="stack">
+      <div class="layers" role="tablist" aria-label="The three layers">
+        <button type="button" role="tab" class="layer on" data-l="0" aria-selected="true"><span class="n">Who runs the controls</span><span class="d">AI agents, every day, not a team once a year</span></button>
+        <button type="button" role="tab" class="layer" data-l="1" aria-selected="false"><span class="n">Evidence</span><span class="d">Produced as the controls run, mapped to every mandate</span></button>
+        <div class="layer" data-l="2" role="tab" tabindex="0" aria-selected="false"><span class="n">Standards, controls and regulations</span><span class="d">All of it built into my AI. Hover or tap one.</span>
+          <div class="chips" id="chips"></div>
+        </div>
+      </div>
+      <div class="detail" id="detail" aria-live="polite"></div>
+    </div>
+    <div class="proof">
+      <div><em>3<span style="font-size:1.4rem;margin:0 .15em">→</span>1</em><p>Months for a large-enterprise risk assessment, with the AI risk systems I built.</p></div>
+      <div><em>$80T+</em><p>In assets held by the custodians whose controls I have assessed, alongside half of the world's systemically important banks.</p></div>
+      <div><em>100+</em><p>Public talks. I explain controls to boards, auditors and enterprise security teams.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel mekong">
+  <div class="wrap">
+    <div>
+      <blockquote>"Nothing ships without human approval."</blockquote>
+      <p class="by">How I run AI agents, every day since late 2022</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <p>I am an AI systems architect, and every engagement starts and ends with AI. I work across the whole model landscape:</p><div class="models"><div><b>Frontier</b><em><span>OpenAI</span><span>Anthropic (Claude)</span><span>Google (Gemini)</span><span>xAI (Grok)</span><span>Perplexity</span></em></div><div><b>Open-weight</b><em><span>DeepSeek</span><span>Z.ai (GLM)</span><span>Moonshot (Kimi)</span></em></div><div><b>Local</b><em><span>Meta (Llama)</span><span>Ollama</span><span>Hugging Face hub</span></em></div><div><b>Routing</b><em><span>Jev decision model</span><span>LiteLLM router</span><span>Multi-model quorum</span></em></div><div><b>Build in</b><em><span>Claude Code</span><span>Claude Code agents</span><span>Cursor</span><span>Grok Bot</span><span>Duet</span></em></div><div><b>Protocols</b><em><span>MCP</span><span>A2A</span><span>Agent identity (DIDs)</span></em></div></div><p>No single model is trusted. A Jev decision model triages each task and checks each agent action in about 200 milliseconds, a LiteLLM router sends the work to the right model, local models run on Ollama, and a multi-model quorum checks the answers, which raises accuracy, lowers cost and speeds up the work. Around the models I build the harness: a gateway for every tool call and data call, policy enforcement that allows, blocks or escalates each action, agent identity, and an append-only evidence ledger. Agents reach tools and data through the Model Context Protocol (MCP), work with each other through the Agent2Agent protocol (A2A), and carry their own identity through decentralized identifiers (DIDs). The same architecture runs AI governance, AI security, tokenization and AI for finance. Every agent runs under maker-checker controls, and nothing ships without human approval.</p>
+      <p>In my first 90 days I would map OpenZeppelin's own controls to every standard and regulation that applies to the company, map every data flow to model providers and agents, and set up the evidence so each audit and each AI commitment is defensible.</p>
+    </div>
+  </div>
+</section>
+
+<section id="ventures">
+  <div class="wrap">
+    <div class="head">
+      <h2>I also sit on the investor's side of the table</h2>
+      <p>I have worked with startups in Silicon Valley since the start of my career, and today across Southeast Asia, most recently with startups in Laos, Singapore and Thailand, and a government client in Vietnam. So I read a deal the way your investment team does, and I can bring each new business onto one control set from the first day.</p>
+    </div>
+    <div class="flow" id="flow">
+      <span class="line"></span><span class="dot"></span>
+      <div class="stations" role="tablist" aria-label="How a deal moves through me">
+        <button type="button" role="tab" class="station" data-s="0" aria-selected="true"><i>Angels</i><small>send me the deals they have no time to check</small></button>
+        <button type="button" role="tab" class="station" data-s="1" aria-selected="false"><i>Due diligence</i><small>done by me: legitimate, and the right bones?</small></button>
+        <button type="button" role="tab" class="station" data-s="2" aria-selected="false"><i>Founders</i><small>product and go-to-market, zero to one</small></button>
+        <button type="button" role="tab" class="station" data-s="3" aria-selected="false"><i>Investors</i><small>ready for the seed or A round</small></button>
+      </div>
+      <div class="say"><p id="vsay"></p></div>
+      <div class="cyc"><i id="vcyc"></i></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="career">
+  <div class="wrap">
+    <div class="head"><h2>Where the experience comes from</h2></div>
+    <div class="tl">
+      <div class="rail" role="tablist">
+        <button role="tab" aria-selected="false" data-c="5">2004</button>
+        <button role="tab" aria-selected="false" data-c="4">2020</button>
+        <button role="tab" aria-selected="false" data-c="3">2021</button>
+        <button role="tab" aria-selected="false" data-c="2">2022</button>
+        <button role="tab" aria-selected="false" data-c="1">2023</button>
+        <button role="tab" aria-selected="true" data-c="0">Today</button>
+      </div>
+      <div class="body"><p class="yrs" id="cy">Feb 2022 to today</p><div><h3 id="ct">Managing Director and Principal Architect, Hashed Works</h3><p id="cb" style="margin-top:8px">AI systems architecture studio, covering AI governance, AI security and digital assets. Designed and built an agentic AI platform with its own partner protocol; a governed runtime where a local AI layer, a router and a model hub sit in front of frontier and open-weight models; a research assistant brain on a multi-model decision intelligence engine, with an LLM council that stress-tests ideas and plugs the holes in a product strategy; an agent-run career and business operating system; and an evidence engine that proves AI does what it was told. Wrote an 11-layer security and compliance reference architecture for a stablecoin payment network. Built AI risk systems that cut a large-enterprise risk assessment from about 3 months to about 1.</p></div></div>
+      <div class="cyc"><i id="ccyc"></i></div>
+    </div>
+  </div>
+</section>
+
+<section id="letter">
+  <div class="wrap">
+    <div class="head"><h2>My letter to you</h2></div>
+    <div class="letter" id="letterText">
+<p>Dear OpenZeppelin Hiring Team,</p>
+<p>I am applying for Head of IT &amp; Security. You need an audit-ready program that stands up to bank diligence while the company adopts AI safely. I do this work today, with AI agents.</p>
+<p>I have always been a consultant, as my father was. I began as a cybersecurity professional and architect. At Oracle I moved from security architect into product management and sales, ran global product marketing for Oracle's security portfolio, and built the Latin America security business from zero to $30 million in annual license sales. After 13 years at Oracle, I went down the rabbit hole and I've been working in the crypto and digital assets space since 2017. In late 2022 I moved into AI to simplify, automate, secure and comply at lower cost. Today I am an AI agentic systems architect across cybersecurity, compliance, privacy and architecture.</p>
+<p>Hashed Works is my consulting business. I've been designing, running and using AI agentic systems daily since late 2022, for clients and for myself. That is the context behind everything else in this letter.</p>
+<p>I work across the whole model landscape: frontier models from OpenAI, Anthropic (Claude), Google (Gemini), xAI (Grok) and Perplexity; open-weight models such as DeepSeek, Z.ai's GLM and Moonshot's Kimi; and local models such as Meta's Llama, from hubs like Hugging Face. No single model is trusted. A Jev decision model triages each task and checks each agent action in milliseconds, a LiteLLM router sends the work to the right model, local models run on Ollama, and a council of models checks one another in a quorum, keeping the work secure, accurate, fast and cost-effective. My agents reach tools and data through the Model Context Protocol (MCP), work with each other through the Agent2Agent protocol (A2A), and carry their own identity through decentralized identifiers (DIDs). I build in Claude Code, with Claude Code agents, Cursor, Grok Bot and Duet. Every agent runs under maker-checker controls, and nothing ships without human approval.</p>
+<p>For AI governance I work to ISO/IEC 42001, the NIST AI Risk Management Framework (AI RMF) and the EU AI Act. For security: the NIST Cybersecurity Framework (CSF), NIST SP 800-53 for banks, ISO/IEC 27001, SOC 1 and SOC 2, and CIS Controls v8. For threats: MITRE ATT&amp;CK, and MITRE ATLAS for AI systems. One control set maps to every mandate, which cut a large risk assessment from about three months to about one. For digital assets, I design custody, wallet, multi-party computation (MPC) and tokenization architectures for startups in Singapore and a government client in Vietnam.</p>
+<p>I know what bank diligence looks for. I have spent much of my career assessing banks and global custodians: more than a dozen custodians holding over $80 trillion in assets, and half of the world's systemically important banks. At EY I advised a global bank's executive team on retail crypto and custody strategy. At BRD I led the launch of a white-label wallet-as-a-service for protocols, wallets, exchanges, traditional finance, payment processors and enterprises.</p>
+<p>I have owned a program end to end. As virtual chief information security officer (vCISO) in 2023 and 2024, I built one from zero for a small-cap, publicly traded semiconductor test company, one of the world's top three in its field, giving assurance to its customers and the US federal government. I have led SOC 1 and SOC 2 preparation and audits, and I explain controls to boards, backed by more than 100 public talks.</p>
+<p>In my first 90 days I would map your controls to what S&amp;P Global's bank customers and auditors will ask, and map every data flow to model providers and agents, so each AI commitment you make is defensible.</p>
+<p>I am an Argentine US citizen, I work in English and Spanish, and I would welcome a conversation.</p>
+<p>Best regards,</p>
+<p>Ricardo G. Diaz</p>
+    </div>
+    <button class="more" id="more" type="button">Read the full letter</button>
+  </div>
+</section>
+
+<div class="contact" id="contact">
+  <div class="wrap">
+    <div><h2>Let's talk</h2><p>Google Meet, Signal or WhatsApp on request. The full two-page CV is attached to my application.</p></div>
+    <div><a class="btn" href="mailto:ricardo@hashedworks.io">ricardo@hashedworks.io</a><a class="btn ghost" href="https://www.linkedin.com/in/Webdefense" target="_blank" rel="noopener">LinkedIn</a></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var E="cubic-bezier(.23,1,.32,1)";
+  // audio
+  var a=document.getElementById("aud"),pp=document.getElementById("pp"),ic=document.getElementById("ic"),pr=document.getElementById("prog"),tm=document.getElementById("time");
+  var PLAY='<path d="M4 2.5v11l9-5.5z" fill="currentColor"/>',PAUSE='<path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z" fill="currentColor"/>';
+  pp.addEventListener("click",function(){ if(a.paused){a.play();ic.innerHTML=PAUSE;pp.setAttribute("aria-label","Pause");} else {a.pause();ic.innerHTML=PLAY;pp.setAttribute("aria-label","Play my letter");} });
+  a.addEventListener("timeupdate",function(){ if(a.duration){pr.style.width=(a.currentTime/a.duration*100)+"%";var r=Math.max(0,a.duration-a.currentTime);tm.textContent="AI-narrated · "+Math.floor(r/60)+":"+String(Math.floor(r%60)).padStart(2,"0")+" left";} });
+  a.addEventListener("ended",function(){ic.innerHTML=PLAY;pr.style.width="0";tm.textContent="AI-narrated · about 5 min";});
+
+  // orbit nodes
+  var HOW=[
+    ["Enterprise trust and audit.","OpenZeppelin's own program, run to every standard, control and regulation that applies to the company. Evidence is produced as the controls run, so every audit and every diligence request gets clear answers."],
+    ["AI governance.","Every AI tool and agentic workflow reviewed before it is approved, and every agent tool call checked in milliseconds by a Jev decision model that scores whether it is in scope, so it runs, waits for a person, or is blocked. Least-privilege access to tools and data, secrets handling, monitoring and an audit trail come with it. Model providers are managed as critical vendors, mapped to ISO/IEC 42001, the NIST AI RMF and the EU AI Act."],
+    ["Privacy and data map.","A live map of how OpenZeppelin's data flows into, through and out of the company, including flows to model providers and through agentic workflows, so every GDPR and CCPA/CPRA commitment is defensible."],
+    ["Incident response.","Playbooks, tabletop exercises and post-incident reviews, run with Legal, plus the bug bounty programs. Agents watch for drift and raise a hand in minutes, not at quarter end."]];
+  var nodes=document.querySelectorAll(".node"),howp=document.getElementById("howp");
+  function pick(i){ nodes.forEach(function(n){n.classList.toggle("on",n.dataset.i==i);}); howp.classList.add("swap"); setTimeout(function(){ howp.innerHTML="<b>"+HOW[i][0]+"</b> "+HOW[i][1]; howp.classList.remove("swap"); },180); }
+  nodes.forEach(function(n){ n.addEventListener("mouseenter",function(){ if(!n.classList.contains("on"))pick(n.dataset.i);}); n.addEventListener("focus",function(){ if(!n.classList.contains("on"))pick(n.dataset.i);}); n.addEventListener("click",function(){pick(n.dataset.i);}); n.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(n.dataset.i);}}); });
+
+  // generic cycler: runs only in view, pauses on hover/focus, resumes 14s after a click, off under reduced motion
+  var RM=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function cycler(root,n,ms,go,bar){
+    var i=0,t0=0,raf,hold=0,vis=false,paused=false;
+    function tick(ts){ if(!t0)t0=ts; var el=ts-t0; if(bar)bar.style.width=Math.min(100,el/ms*100)+"%"; if(el>=ms){t0=ts;i=(i+1)%n;go(i);} raf=requestAnimationFrame(tick); }
+    function start(){ if(RM||raf||!vis||paused)return; t0=0; raf=requestAnimationFrame(tick); }
+    function stop(){ if(raf)cancelAnimationFrame(raf); raf=0; if(bar)bar.style.width="0"; }
+    root.addEventListener("mouseenter",function(){paused=true;stop();}); root.addEventListener("mouseleave",function(){paused=false;start();});
+    root.addEventListener("focusin",function(){paused=true;stop();}); root.addEventListener("focusout",function(){paused=false;start();});
+    if("IntersectionObserver" in window){ new IntersectionObserver(function(es){ vis=es[0].isIntersecting; vis?start():stop(); },{threshold:.35}).observe(root); } else { vis=true; start(); }
+    return { set:function(k){ i=k; stop(); clearTimeout(hold); hold=setTimeout(function(){paused=false;start();},14000); } };
+  }
+
+  // how: three layers
+  var STD=[
+    ["NIST CSF 2.0","6 functions","The outcome map every other framework hangs off.",["Govern","Identify","Protect","Detect","Respond","Recover"]],
+    ["NIST SP 800-53 Rev. 5","20 control families","The deepest control catalogue; my agents map the others to it.",["Access Control","Awareness and Training","Audit and Accountability","Assessment and Authorization","Configuration Management","Contingency Planning","Identification and Authentication","Incident Response","Maintenance","Media Protection","Physical and Environmental Protection","Planning","Program Management","Personnel Security","PII Processing and Transparency","Risk Assessment","System and Services Acquisition","System and Communications Protection","System and Information Integrity","Supply Chain Risk Management"]],
+    ["ISO/IEC 27001:2022","93 Annex A controls, 4 themes","The certificate regulators and banks ask for first.",["Organizational (37)","People (8)","Physical (14)","Technological (34)"]],
+    ["SOC 1 and SOC 2","5 Trust Services Criteria","SOC 1 covers controls over financial reporting; SOC 2 proves the controls you already run.",["Security","Availability","Processing Integrity","Confidentiality","Privacy"]],
+    ["CIS Controls v8","18 controls","The practical baseline I stand a security function up on.",["Enterprise Asset Inventory","Software Asset Inventory","Data Protection","Secure Configuration","Account Management","Access Control Management","Continuous Vulnerability Management","Audit Log Management","Email and Web Browser Protections","Malware Defenses","Data Recovery","Network Infrastructure Management","Network Monitoring and Defense","Security Awareness and Skills Training","Service Provider Management","Application Software Security","Incident Response Management","Penetration Testing"]],
+    ["MITRE ATT&CK","14 enterprise tactics","How attackers actually move; every control is tested against it.",["Reconnaissance","Resource Development","Initial Access","Execution","Persistence","Privilege Escalation","Defense Evasion","Credential Access","Discovery","Lateral Movement","Collection","Command and Control","Exfiltration","Impact"]],
+    ["MITRE ATLAS","Tactics and techniques against AI systems","The attack map for the AI itself, from model access to attack staging.",["ML Model Access","ML Attack Staging","Prompt and data poisoning paths","Model theft and evasion"]],
+    ["ISO/IEC 42001:2023","AI management system","The management standard for how an organisation governs its AI.",["AI policies","Internal organization","Resources for AI systems","AI system impact assessment","AI system life cycle","Data for AI systems","Information for interested parties","Use of AI systems","Third-party relationships"]],
+    ["NIST AI RMF 1.0","4 functions","Risk management for AI, mapped to the same control set.",["Govern","Map","Measure","Manage"]],
+    ["EU AI Act","Obligations by risk tier","The regulation your AI use will be judged against.",["Prohibited practices","High-risk systems","Transparency obligations","General-purpose AI models"]],
+    ["CISA Cybersecurity Performance Goals","US baseline practices","The US government's short list of practices that cut the most risk.",["Account security","Device security","Data security","Governance and training","Vulnerability management","Supply chain and third party","Response and recovery"]],
+    ["GENIUS Act","US stablecoin law","The US framework for payment stablecoins that the onchain market now builds to.",["Permitted payment stablecoin issuers","Reserve backing","Reserve disclosure","AML and sanctions compliance"]],
+    ["MiCA","EU crypto-asset regulation","The EU rulebook for crypto-asset service providers and tokens.",["Crypto-asset service providers","Asset-referenced and e-money tokens","Market abuse rules","Custody and safeguarding"]],
+    ["DORA","EU digital operational resilience","How regulated EU financial firms, and their technology providers, must stay resilient.",["ICT risk management","Incident reporting","Resilience testing","Third-party ICT risk","Information sharing"]],
+    ["AML, KYC and the Travel Rule","Financial crime controls","The controls regulators expect wherever digital assets move.",["Customer due diligence (KYC)","Transaction monitoring","Sanctions screening (OFAC)","FATF Travel Rule","Suspicious activity reporting"]],
+    ["GDPR","EU data protection","The privacy law every data flow, including flows to model providers, is held to.",["Lawful basis","Data subject rights","Data protection by design","Breach notice within 72 hours","Cross-border transfers"]]];
+  var LAY=[
+    ["Who runs the controls","AI agents, every day","Each control in the catalogue has an agent that runs it, checks it and raises a hand when something drifts. What used to take a team of people on a yearly cycle runs continuously, across Web2 and Web3, in any environment."],
+    ["Evidence","Produced as the controls run","Not gathered for the audit. The requirements are the single source of truth: every standard, control and regulation that applies to OpenZeppelin maps to one control set, so one piece of evidence serves auditors, regulators, the board and enterprise customers at the same time. Any certification then becomes what it should be: proving controls that already run, at a pace your maturity sets."],
+    ["Standards, controls and regulations","Built into my AI","Every standard, control catalogue and regulatory mandate here lives in my AI and its knowledge base. The business process of assessing, implementing and keeping the controls, and so defining trust daily, is what the AI runs. Hover over or tap a standard to see what sits under it."]];
+  var layers=document.querySelectorAll(".layer"),det=document.getElementById("detail"),chips=document.getElementById("chips");
+  STD.forEach(function(s,k){ var b=document.createElement("button"); b.type="button"; b.textContent=s[0]; b.dataset.k=k; b.addEventListener("click",function(e){ e.stopPropagation(); layer(2,k); }); b.addEventListener("mouseenter",function(){ if(!b.classList.contains("on"))layer(2,k); }); chips.appendChild(b); });
+  function show(html){ det.classList.add("swap"); setTimeout(function(){ det.innerHTML=html; det.classList.remove("swap"); },200); }
+  function layer(i,k){
+    layers.forEach(function(l){ var on=+l.dataset.l===i; l.classList.toggle("on",on); l.setAttribute("aria-selected",on); });
+    chips.querySelectorAll("button").forEach(function(b){ b.classList.toggle("on", i===2 && +b.dataset.k===k); });
+    if(i===2 && k!=null){ var s=STD[k]; show("<p class='cnt'>"+s[1]+"</p><h3>"+s[0]+"</h3><p>"+s[2]+" My agents run these controls daily and keep the evidence for each one.</p><div class='fam'>"+s[3].map(function(f){return "<span>"+f+"</span>";}).join("")+"</div>"); }
+    else { var L2=LAY[i]; show("<p class='cnt'>"+L2[1]+"</p><h3>"+L2[0]+"</h3><p>"+L2[2]+"</p>"); }
+  }
+  layers.forEach(function(l){ l.addEventListener("click",function(){ layer(+l.dataset.l); }); l.addEventListener("mouseenter",function(){ if(!l.classList.contains("on"))layer(+l.dataset.l); }); l.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); layer(+l.dataset.l); } }); });
+  det.innerHTML="<p class='cnt'>"+LAY[0][1]+"</p><h3>"+LAY[0][0]+"</h3><p>"+LAY[0][2]+"</p>";
+
+  // ventures: deal flow, cycling
+  var V=[
+    "A network of angel investors sends me the opportunities they have no time to check. I also act as GP at a VC firm.",
+    "I do the due diligence myself. Is the startup legitimate, and does it have the right bones? Product ideas are stress-tested by my own panel of AI agents before money goes in.",
+    "Product and go-to-market strategy, business models and first hires, from zero to one.",
+    "I prepare the founders and put them in front of investors, ready for the seed or A round. Silicon Valley since the start of my career; Laos, Singapore, Thailand and Vietnam today."];
+  var sts=document.querySelectorAll(".station"),vsay=document.getElementById("vsay");
+  function station(i){ sts.forEach(function(b,k){ b.setAttribute("aria-selected",k===i); }); vsay.classList.add("swap"); setTimeout(function(){ vsay.textContent=V[i]; vsay.classList.remove("swap"); },180); }
+  vsay.textContent=V[0];
+  var vc=cycler(document.getElementById("flow"),4,5000,station,document.getElementById("vcyc"));
+  sts.forEach(function(b,k){ function go(){ if(b.getAttribute("aria-selected")!=="true"){ station(k); vc.set(k); } } b.addEventListener("click",function(){ station(k); vc.set(k); }); b.addEventListener("mouseenter",go); b.addEventListener("focus",go); });
+
+  // career timeline
+  var C=[
+    ["Feb 2022 to today","Managing Director and Principal Architect, Hashed Works","AI systems architecture studio, covering AI governance, AI security and digital assets. Designed and built an agentic AI platform with its own partner protocol; a governed runtime where a local AI layer, a router and a model hub sit in front of frontier and open-weight models; a research assistant brain on a multi-model decision intelligence engine, with an LLM council that stress-tests ideas and plugs the holes in a product strategy; an agent-run career and business operating system; and an evidence engine that proves AI does what it was told. Wrote an 11-layer security and compliance reference architecture for a stablecoin payment network. Built AI risk systems that cut a large-enterprise risk assessment from about 3 months to about 1."],
+    ["Jul 2023 to Aug 2024","CISO and VP of Business Development, a security technology company","Built the security function from zero on NIST CSF, CIS Controls v8 and MITRE ATT&CK. As virtual CISO, built a program from zero for a publicly traded semiconductor test company, one of the world's top three in its field."],
+    ["Jul 2022 to Jun 2023","Director, Global Head of Product, Blockchain Financial Services, EY","Set global product strategy for EY Tokenized Securities Services. Advised a global bank's executive team on retail crypto and custody strategy."],
+    ["Dec 2021 to Feb 2022","Solutions Architect, Institutional, Coinbase","Prime brokerage, custody and crypto infrastructure for large institutions, using MPC key management and HSMs."],
+    ["Aug 2020 to Dec 2021","Head of Solutions, BRD (acquired by Coinbase)","Led solutions for North America, Asia and emerging markets: wallets, custody and APIs for institutions. Led the launch of BRD's white-label wallet-as-a-service for protocols, wallets, exchanges, traditional finance, payment processors and enterprises, and custody security architecture with MPC and multi-sig."],
+    ["Jun 2004 to Mar 2017","Security Architect to Director, Oracle","Founded and grew the North America security consulting practice from 15 to 55 consultants, delivering control assessments for banks and custodians. Built the Latin America security business from zero to $30 million in annual license sales."]];
+  var tabs=document.querySelectorAll(".rail button"),cy=document.getElementById("cy"),ct=document.getElementById("ct"),cb=document.getElementById("cb");
+  var ORDER=[5,4,3,2,1,0];
+  function era(i){ tabs.forEach(function(x){x.setAttribute("aria-selected",+x.dataset.c===i);}); [cy,ct,cb].forEach(function(e){e.classList.add("swap");}); setTimeout(function(){cy.textContent=C[i][0];ct.textContent=C[i][1];cb.textContent=C[i][2];[cy,ct,cb].forEach(function(e){e.classList.remove("swap");});},180); }
+  var cc=cycler(document.querySelector(".tl"),6,5500,function(p){ era(ORDER[p]); },document.getElementById("ccyc"));
+  tabs.forEach(function(b){ function go(){ var i=+b.dataset.c; era(i); cc.set(ORDER.indexOf(i)); } b.addEventListener("click",go); b.addEventListener("mouseenter",function(){ if(b.getAttribute("aria-selected")!=="true")go(); }); });
+
+  // letter
+  var L=document.getElementById("letterText"),m=document.getElementById("more");
+  m.addEventListener("click",function(){ var o=L.classList.toggle("open"); m.textContent=o?"Show less":"Read the full letter"; if(!o)L.scrollIntoView({block:"start"}); });
+})();
+</script>
+</body>
+</html>
