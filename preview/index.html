@@ -38,6 +38,10 @@ svg{display:block}
 nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 nav .wrap{display:flex;align-items:center;gap:22px;height:60px;white-space:nowrap;overflow-x:auto;scrollbar-width:none}
 nav b{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);margin-right:auto}
+nav .brand{display:flex;align-items:center;gap:10px;margin-right:auto;text-decoration:none}
+nav .brand b{margin-right:0}
+nav .brand i{font-style:normal;font-size:.82rem;color:var(--royal);font-weight:600;padding-left:10px;border-left:1px solid var(--line)}
+@media (max-width:600px){nav .brand i{display:none}}
 nav a{color:var(--muted);text-decoration:none;font-size:.86rem;font-weight:500}
 nav a:hover{color:var(--royal)}
 
@@ -227,7 +231,7 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
 <body>
 
 <nav><div class="wrap">
-  <b>Ricardo G. Diaz</b>
+  <span class="brand"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true" style="flex:none"><defs><linearGradient id="hwm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f56fa"/><stop offset="1" stop-color="#08c2ff"/></linearGradient></defs><circle cx="13" cy="13" r="12" fill="none" stroke="url(#hwm)" stroke-width="1.5"/><circle cx="13" cy="13" r="6.5" fill="url(#hwm)"/></svg><b>Ricardo G. Diaz</b><i>Evidence, not the model.</i></span>
   <a href="#trust">Trust</a><a href="#how">How</a><a href="#ventures">Ventures</a><a href="#career">Career</a><a href="#work">Work with me</a><a href="#contact">Contact</a>
 </div></nav>
 
@@ -295,7 +299,8 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
   <div class="wrap">
     <div style="display:flex;flex-direction:column;gap:16px">
       <h2>You sell trust. Evidence is how you prove it.</h2>
-      <p>Banks, custodians, exchanges, payment processors, asset managers and family offices, from North America to the Middle East, all hold other people's money. Family offices often sit outside full regulation, yet the families and partners behind them expect the same proof. Security, privacy and compliance are the mechanism. What each firm has to prove, every day, to shareholders, clients, employees and regulators, is trust, across the people, systems, data and AI it runs on. The standards, controls and regulations that apply to the firm become the single source of truth for how we work. What we build inside is also what auditors, regulators and enterprise customers will test.</p>
+      <p>Banks, custodians, exchanges, payment processors, asset managers and family offices, from North America to the Middle East, all hold other people's money. Family offices often sit outside full regulation, yet the families and partners behind them expect the same proof. What each firm has to prove, every day, to shareholders, clients, employees and regulators, is trust, across the people, systems, data and AI it runs on. Security, privacy and compliance are how you get there. Evidence is how you prove it. The standards, controls and regulations that apply to the firm become the single source of truth for how we work. What we build inside is also what auditors, regulators and enterprise customers will test.</p>
+      <p style="opacity:.92">UOB, the Singapore bank, put it plainly in its October 2026 report, <em>Agentic Finance: Building the foundations for trusted, bounded autonomy</em>: the future of AI-driven payments will depend less on advances in AI than on how effectively institutions govern it, with clear accountability and security controls to build trust. In UOB's own words, “success may depend less on how autonomous an agent is and more on how confidently institutions can govern and trust it.” Our answer is evidence. That is Evidence by Design: proof built into every system from the first day.</p>
     </div>
     <ol class="chain">
       <li><i></i>Requirements: standards, controls and regulations</li><li><i></i>Controls that run every day</li>
