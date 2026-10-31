@@ -1,0 +1,9 @@
+Evidence, not the model. I am Ricardo Diaz, founder of Hashed Works, based in Southeast Asia.
+A I now makes decisions inside banks, custodians, exchanges and family offices. Boards, regulators and clients all ask one question: can you prove it is under control?
+You sell trust. I prove it with evidence.
+U O B, the Singapore bank, said it well in its October 2026 report on agentic finance: success may depend less on how autonomous an agent is, and more on how confidently institutions can govern and trust it. That confidence comes from evidence, not from the model.
+Here is how. Everything starts from a single source of truth. Standards such as NIST, I S O 27001 and I S O 42001 define the policies, the controls and the evidence. That is canonical data, and canonical data is what your A I should act on. Early generative A I would confidently make things up, and then drift. Canonical data and evidence keep it honest.
+I run it in three layers. A I agents run the controls every day, not a team once a year. Evidence is produced as the controls run, and one control set maps to every mandate. And no single model is trusted: the Jev decision model checks each agent action, a LiteLLM router picks the right model, local models run on Ollama, and nothing ships without human approval.
+I bring thirty years in security, identity and privacy: thirteen years at Oracle, then B R D, Coinbase and E Y, and now Hashed Works, working with startups in Laos, Singapore and Thailand, and a government client in Vietnam.
+Evidence by Design means proof is built into every system from the first day. Trust, proven every day.
+Write to ricardo at hashed works dot i o.

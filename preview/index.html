@@ -198,6 +198,25 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
 @media (max-width:860px){.svc{grid-template-columns:1fr}.svc div:nth-child(even){padding-left:0;border-left:0}}
 .hq{margin:22px 0 6px;padding:20px 24px;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 14px 30px -22px rgba(58,64,216,.45);font-size:clamp(1.35rem,2.4vw,1.75rem);line-height:1.3;font-weight:600;color:var(--ink);letter-spacing:-.01em}
 .hqby{font-size:.95rem;color:var(--muted);margin-bottom:18px}
+/* claim band: evidence, not the model + UOB */
+.claim{position:relative;overflow:hidden;background:#0b0d1f;color:#e9ecff;padding:96px 0}
+.claim .names{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);align-content:center;gap:40px 10px;padding:40px;text-align:center;pointer-events:none}
+.claim .names span{font-weight:600;font-size:clamp(1rem,2vw,1.4rem);color:#5d6396;transition:opacity 1.1s var(--ease),filter 1.1s var(--ease)}
+.claim .names span.gone{opacity:0;filter:blur(8px)}
+.claim .big{position:relative;font-size:clamp(2.6rem,7.5vw,5.6rem);line-height:1;font-weight:800;letter-spacing:-.04em;color:#fff;max-width:14ch}
+.claim .big em{font-style:normal;color:#8f95ff}
+.claim .uob{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;margin-top:64px}
+.claim blockquote{font-size:clamp(1.3rem,2.6vw,1.85rem);line-height:1.3;font-weight:600;color:#fff;text-wrap:balance}
+.claim .src{margin-top:14px;font-size:.92rem;color:#a9b0e0}
+.claim .src a{color:#c7cbff;text-underline-offset:3px}
+.meter{display:flex;flex-direction:column;gap:22px}
+.meter p{font-size:.95rem;color:#c7cbff;margin-bottom:8px}
+.meter .bar{height:14px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.meter .bar i{display:block;height:100%;width:0;border-radius:999px;transition:width 1.6s var(--ease)}
+.meter .a i{background:#5d6396}.meter .b i{background:linear-gradient(90deg,#4f56fa,#08c2ff)}
+.claim.on .meter .a i{width:28%}.claim.on .meter .b i{width:94%}
+.meter small{display:block;font-size:.85rem;color:#8a90c2;margin-top:4px}
+@media (max-width:860px){.claim .uob{grid-template-columns:1fr;gap:32px}.claim .names{grid-template-columns:repeat(2,1fr)}.claim{padding:72px 0}}
 /* close */
 .contact{background:linear-gradient(135deg,#3a40d8,#4f56fa 60%,#2f8fe0);color:#fff;padding:64px 0}
 .contact .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px}
@@ -242,7 +261,7 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
       <h1 class="in">AI-led security and governance for regulated digital assets and financial institutions</h1>
       <p class="lead in">AI now makes decisions inside banks, custodians, exchanges and family offices. Regulators, boards and clients all ask the same question: can you prove it is under control? I give firms that proof: checks and balances that run every day, and evidence that earns the trust of shareholders, clients, employees and regulators.</p>
       <blockquote class="hq in">Evidence, not the model.</blockquote>
-      <p class="hqby in">Banks are saying it too: UOB research finds AI-driven payments will depend less on advances in AI than on how well institutions govern it, with clear accountability and security controls to build trust. <a href="https://technode.global/2026/10/19/governance-accountability-key-to-scaling-ai-driven-autonomous-payments-uob/" target="_blank" rel="noopener">Source</a></p>
+      <p class="hqby in">Evidence by Design: proof built into every system from the first day.</p>
       <div class="player in" id="player">
         <button type="button" id="pp" aria-label="Hear who I am"><svg id="ic" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg></button>
         <div class="meta"><strong>Hear who I am</strong><span id="time">AI-narrated · about 4 min</span></div>
@@ -298,9 +317,8 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
 <div class="trust" id="trust">
   <div class="wrap">
     <div style="display:flex;flex-direction:column;gap:16px">
-      <h2>You sell trust. Evidence is how you prove it.</h2>
-      <p>Banks, custodians, exchanges, payment processors, asset managers and family offices, from North America to the Middle East, all hold other people's money. Family offices often sit outside full regulation, yet the families and partners behind them expect the same proof. What each firm has to prove, every day, to shareholders, clients, employees and regulators, is trust, across the people, systems, data and AI it runs on. Security, privacy and compliance are how you get there. Evidence is how you prove it. The standards, controls and regulations that apply to the firm become the single source of truth for how we work. What we build inside is also what auditors, regulators and enterprise customers will test.</p>
-      <p style="opacity:.92">UOB, the Singapore bank, put it plainly in its October 2026 report, <em>Agentic Finance: Building the foundations for trusted, bounded autonomy</em>: the future of AI-driven payments will depend less on advances in AI than on how effectively institutions govern it, with clear accountability and security controls to build trust. In UOB's own words, “success may depend less on how autonomous an agent is and more on how confidently institutions can govern and trust it.” Our answer is evidence. That is Evidence by Design: proof built into every system from the first day.</p>
+      <h2>You sell trust. I prove it with evidence.</h2>
+      <p>Banks, custodians, exchanges, payment processors, asset managers and family offices, from North America to the Middle East, all hold other people's money. Security, privacy and compliance get you there. Evidence proves it, to shareholders, clients, employees and regulators.</p>
     </div>
     <ol class="chain">
       <li><i></i>Requirements: standards, controls and regulations</li><li><i></i>Controls that run every day</li>
@@ -311,11 +329,28 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
   </div>
 </div>
 
+<section class="claim" id="claim">
+  <div class="names" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="big">Evidence, <em>not the model.</em></p>
+    <div class="uob">
+      <div>
+        <blockquote>“Success may depend less on how autonomous an agent is and more on how confidently institutions can govern and trust it.”</blockquote>
+        <p class="src">UOB, <em>Agentic Finance: Building the foundations for trusted, bounded autonomy</em>, October 2026, page 26. <a href="https://www.uobgroup.com/assets/web-resources/research/pdf/da-261014.pdf" target="_blank" rel="noopener">Read the report</a></p>
+      </div>
+      <div class="meter" aria-label="What decides success: governance and trust far more than autonomy">
+        <div class="a"><p>How autonomous the agent is</p><div class="bar"><i></i></div></div>
+        <div class="b"><p>How confidently you can govern and trust it</p><div class="bar"><i></i></div><small>I make that confidence provable, with evidence.</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="how">
   <div class="wrap">
     <div class="head">
       <h2>The question is how. The answer is AI.</h2>
-      <p>Doing this by hand takes a team on a yearly cycle. I run it as three layers, with AI governance and AI security tooling, across Web2 and Web3, in any environment. Hover over a layer, or a standard, to see what sits inside.</p>
+      <p>Standards such as NIST, ISO 27001 and ISO 42001 define the policies, the controls and the evidence. Together they are the single source of truth: the canonical data your AI should act on, so it does not make things up or drift. Doing this by hand takes a team on a yearly cycle. I run it as three layers, with AI governance and AI security tooling, across Web2 and Web3, in any environment. Hover over a layer, or a standard, to see what sits inside.</p>
     </div>
     <div class="stack">
       <div class="layers" role="tablist" aria-label="The three layers">
@@ -509,6 +544,16 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
     setInterval(function(){ t.classList.add("fadeout"); u.classList.add("fadeout");
       setTimeout(function(){ k=(k+1)%W.length; t.textContent=W[k][0]; u.textContent=W[k][1]; t.style.fontSize=W[k][2]+"px"; t.classList.remove("fadeout"); u.classList.remove("fadeout"); },460);
     },2800);
+  })();
+
+  // claim band: model names fade out, meter fills (static under reduced motion)
+  (function(){
+    var c=document.getElementById("claim"); if(!c)return;
+    var n=c.querySelector(".names"),CO=["OpenAI","Anthropic","Google Gemini","xAI Grok","Meta Llama","DeepSeek","Mistral","Perplexity"];
+    CO.forEach(function(x){var s=document.createElement("span");s.textContent=x;n.appendChild(s);});
+    var sp=n.querySelectorAll("span"),RM=window.matchMedia("(prefers-reduced-motion: reduce)").matches,done=false;
+    function go(){ if(done)return; done=true; c.classList.add("on"); if(RM){sp.forEach(function(s){s.classList.add("gone");});return;} sp.forEach(function(s,i){ setTimeout(function(){s.classList.add("gone");},400+i*280); }); }
+    if("IntersectionObserver" in window){ new IntersectionObserver(function(es){ if(es[0].isIntersecting)go(); },{threshold:.35}).observe(c); } else go();
   })();
 })();
 </script>
