@@ -264,7 +264,7 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
       <p class="hqby in">Evidence by Design: proof built into every system from the first day.</p>
       <div class="player in" id="player">
         <button type="button" id="pp" aria-label="Hear who I am"><svg id="ic" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg></button>
-        <div class="meta"><strong>Hear who I am</strong><span id="time">AI-narrated · about 4 min</span></div>
+        <div class="meta"><strong>Hear who I am</strong><span id="time">AI-narrated · about 2 min</span></div>
         <div class="bar" aria-hidden="true"><i id="prog"></i></div>
       </div>
       <audio id="aud" src="about.mp3" preload="none"></audio>
@@ -450,7 +450,7 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
   var PLAY='<path d="M4 2.5v11l9-5.5z" fill="currentColor"/>',PAUSE='<path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z" fill="currentColor"/>';
   pp.addEventListener("click",function(){ if(a.paused){a.play();ic.innerHTML=PAUSE;pp.setAttribute("aria-label","Pause");} else {a.pause();ic.innerHTML=PLAY;pp.setAttribute("aria-label","Hear who I am");} });
   a.addEventListener("timeupdate",function(){ if(a.duration){pr.style.width=(a.currentTime/a.duration*100)+"%";var r=Math.max(0,a.duration-a.currentTime);tm.textContent="AI-narrated · "+Math.floor(r/60)+":"+String(Math.floor(r%60)).padStart(2,"0")+" left";} });
-  a.addEventListener("ended",function(){ic.innerHTML=PLAY;pr.style.width="0";tm.textContent="AI-narrated · about 4 min";});
+  a.addEventListener("ended",function(){ic.innerHTML=PLAY;pr.style.width="0";tm.textContent="AI-narrated · about 2 min";});
 
   // orbit nodes
   var HOW=[
