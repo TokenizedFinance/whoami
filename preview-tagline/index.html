@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Evidence, not the model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --royal:#4f56fa; --navy:#3a40d8; --cyan:#08c2ff;
+  --bg:#ffffff; --panel:#f5f7f8; --ink:#0a0a0a; --text:#313334; --muted:#55595f; --line:#e2e8ea;
+  --ease:cubic-bezier(.23,1,.32,1);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0a0a;--panel:#111426;--ink:#ffffff;--text:#e2e8ea;--muted:#a0aeb5;--line:#1f2333;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0a0a0a;--panel:#111426;--ink:#ffffff;--text:#e2e8ea;--muted:#a0aeb5;--line:#1f2333;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;font-size:19px;line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:64px 0;border-top:1px solid var(--line)}
+.eyebrow{font-family:"DM Mono",monospace;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--royal);margin-bottom:12px}
+h1,h2,h3{color:var(--ink);letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:clamp(2.6rem,7vw,5rem);line-height:1;font-weight:700}
+h2{font-size:clamp(1.7rem,3.4vw,2.4rem);line-height:1.15;margin-bottom:14px}
+h3{font-size:1.2rem;margin-bottom:6px}
+p+p{margin-top:12px}
+.muted{color:var(--muted)}
+/* hero */
+.hero{padding:72px 0 56px}
+.hero .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero p.lead{font-size:1.2rem;margin-top:20px;max-width:34rem}
+.player{display:flex;align-items:center;gap:14px;margin-top:28px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:10px 20px 10px 10px;max-width:380px}
+.player button{width:56px;height:56px;border-radius:50%;border:0;background:var(--royal);color:#fff;display:grid;place-items:center;cursor:pointer;transition:transform .16s var(--ease)}
+.player button:active{transform:scale(.97)}
+.player strong{display:block;color:var(--ink)}
+.player span{font-size:.9rem;color:var(--muted)}
+/* swap demo: models change, evidence stays */
+.demo{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:22px;font-family:"DM Mono",monospace;font-size:.92rem}
+.demo .row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.demo .row:last-child{border-bottom:0}
+.demo .model{color:var(--muted);transition:opacity .25s var(--ease),filter .25s var(--ease)}
+.demo .model.fade{opacity:.15;filter:blur(2px)}
+.demo .ok{color:var(--royal);font-weight:500}
+.demo .cap{font-family:Inter,sans-serif;font-size:.9rem;color:var(--muted);margin-top:12px}
+/* system: three words */
+.chain{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:12px;margin-top:28px}
+.chain .w{border:1px solid var(--line);border-radius:10px;padding:22px;transition:transform .2s var(--ease),border-color .2s var(--ease),background .2s var(--ease)}
+.chain .w:hover,.chain .w:focus{transform:translateY(-3px);border-color:var(--royal);outline:none}
+.chain .w b{font-size:1.5rem;color:var(--ink);display:block;margin-bottom:6px}
+.chain .w.model b{color:var(--muted);text-decoration:line-through;text-decoration-thickness:2px}
+.chain .arrow{align-self:center;color:var(--royal);font-size:1.6rem}
+.chain .w .more{max-height:0;overflow:hidden;opacity:0;transition:max-height .3s var(--ease),opacity .25s var(--ease)}
+.chain .w:hover .more,.chain .w:focus .more,.chain .w.on .more{max-height:12rem;opacity:1;margin-top:8px}
+/* lines */
+.lines{display:flex;flex-direction:column;border-top:1px solid var(--line);margin-top:20px}
+.lines div{display:grid;grid-template-columns:2.2rem 1fr;gap:14px;padding:18px 0;border-bottom:1px solid var(--line)}
+.lines i{font-style:normal;font-family:"DM Mono",monospace;color:var(--royal)}
+.lines b{color:var(--ink);font-size:1.15rem;display:block}
+/* concepts */
+.concepts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:20px;border-top:1px solid var(--line)}
+.concepts div{padding:22px 24px 22px 0;border-bottom:1px solid var(--line)}
+.concepts div:nth-child(even){padding-left:24px;border-left:1px solid var(--line)}
+.concepts b{color:var(--ink)}
+.concepts .tag{display:inline-block;font-family:"DM Mono",monospace;font-size:.8rem;color:var(--royal);margin-bottom:6px}
+/* places */
+.places{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.places span{border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:.95rem;color:var(--ink);transition:border-color .2s var(--ease),transform .2s var(--ease)}
+.places span:hover{border-color:var(--royal);transform:translateY(-2px)}
+/* found */
+.found{background:var(--panel)}
+.found ul{margin:14px 0 0 1.2rem}
+.found li{margin-bottom:8px}
+.found a{color:var(--royal)}
+/* choices */
+.choices{background:linear-gradient(135deg,#3a40d8,#4f56fa 60%,#2f8fe0);color:#fff;border-top:0}
+.choices h2,.choices h3{color:#fff}
+.choices ol{margin:16px 0 0 1.3rem}
+.choices li{margin-bottom:14px}
+.choices .opt{display:block;opacity:.92}
+@media (max-width:860px){
+  .hero .grid{grid-template-columns:1fr;gap:32px}
+  .chain{grid-template-columns:1fr}.chain .arrow{transform:rotate(90deg);justify-self:center}
+  .concepts{grid-template-columns:1fr}.concepts div:nth-child(even){padding-left:0;border-left:0}
+  section{padding:48px 0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap grid">
+    <div>
+      <p class="eyebrow">Hashed Works · creative brief for Rico</p>
+      <h1>Evidence, not the model.</h1>
+      <p class="lead">Your tagline, your epiphany. This page shows one way to build the whole brand around it: three words, one method, and ideas for how every page, post and pitch can carry it. Your choices are at the bottom.</p>
+      <div class="player">
+        <button type="button" id="pp" aria-label="Play this page"><svg id="ic" width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg></button>
+        <div><strong>Hear this page</strong><span id="time">about 4 min</span></div>
+      </div>
+      <audio id="aud" src="tagline.mp3" preload="none"></audio>
+    </div>
+    <div>
+      <div class="demo" aria-label="Demo: the model changes, the evidence stays">
+        <div class="row"><span>agent action</span><span>approve payment</span></div>
+        <div class="row"><span>model</span><span class="model" id="model">frontier model</span></div>
+        <div class="row"><span>policy checked</span><span class="ok">yes</span></div>
+        <div class="row"><span>human approval</span><span class="ok">recorded</span></div>
+        <div class="row"><span>evidence</span><span class="ok">logged, mapped, kept</span></div>
+        <p class="cap">Concept: the model keeps changing. The evidence stays the same. That is what a board, an auditor and a regulator can rely on.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">The brand system</p>
+    <h2>Three words. One promise.</h2>
+    <p>Evidence, model and trust become the keywords in all marketing and product marketing. The model sits in the middle, crossed out, because it is never the point. Hover or tap each word.</p>
+    <div class="chain">
+      <div class="w" tabindex="0"><b>Evidence</b><span class="muted">What we deliver</span><div class="more">Every control, every agent action and every decision leaves proof that is mapped to the standards and regulations a firm answers to. This is Evidence by Design, your method from last year.</div></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="w model" tabindex="0"><b>Model</b><span class="muted">Never the point</span><div class="more">Models change every month. Frontier, open-weight and local models come and go. No single model is trusted, so the value cannot live in the model.</div></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="w" tabindex="0"><b>Trust</b><span class="muted">What the client gets</span><div class="more">Proof for shareholders, clients, employees, regulators and families. Trust is the holy grail. Security, privacy and compliance are how it is earned.</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">How it fits together</p>
+    <h2>The tagline says why. Evidence by Design says how.</h2>
+    <div class="lines">
+      <div><i>01</i><p><b>Evidence, not the model.</b> The tagline. The belief behind everything we sell.</p></div>
+      <div><i>02</i><p><b>Evidence by Design.</b> The method. Evidence is built into every system from the first day, not gathered for the audit.</p></div>
+      <div><i>03</i><p><b>Trust, proven every day.</b> The outcome. A suggested closing line for pages, decks and emails.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Supporting lines</p>
+    <h2>Lines that work beside the tagline</h2>
+    <p class="muted">Drafts for you to keep, change or drop. The tagline itself does not change.</p>
+    <div class="lines">
+      <div><i>A</i><p><b>Models change. Evidence stays.</b> Short, for banners and slides.</p></div>
+      <div><i>B</i><p><b>Don't trust the model. Trust the evidence.</b> For talks and LinkedIn posts.</p></div>
+      <div><i>C</i><p><b>Your regulator won't audit the model. They'll audit the evidence.</b> For banks and regulated firms.</p></div>
+      <div><i>D</i><p><b>Every AI decision comes with its receipt.</b> For product pages and demos.</p></div>
+      <div><i>E</i><p><b>Proof, not promises.</b> For family offices and investors.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">How we present it</p>
+    <h2>Five creative ideas</h2>
+    <div class="concepts">
+      <div><span class="tag">1 · The swap</span><p><b>Models change, evidence stays.</b> The demo at the top of this page: the model name keeps changing while the evidence column never moves. Works as the website hero and as a 15-second video.</p></div>
+      <div><span class="tag">2 · The receipt</span><p><b>Every agent action prints a receipt.</b> A clean receipt for each AI decision: what was asked, which rule applied, who approved, where the proof is kept. A strong visual for decks and the AI Governance Review.</p></div>
+      <div><span class="tag">3 · The boardroom question</span><p><b>"Can you show me?"</b> Open every pitch with the question a board, auditor or regulator asks. The answer on the next slide is the evidence pack, not a model diagram.</p></div>
+      <div><span class="tag">4 · The scale</span><p><b>Evidence outweighs the model.</b> A simple balance: the model on one side, the evidence on the other, and the evidence side always heavier. Works as an icon and a LinkedIn banner.</p></div>
+      <div><span class="tag">5 · Banks are saying it too</span><p><b>The UOB proof point.</b> UOB's research says AI-driven payments depend less on advances in AI than on how well institutions govern it. We quote the source and let the tagline answer it.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Where it goes</p>
+    <h2>Everywhere we speak</h2>
+    <div class="places">
+      <span>hashedworks.io hero</span><span>Who am I page</span><span>Employer pages</span><span>LinkedIn headline and banner</span><span>Email signature</span><span>AI Governance Review offer</span><span>Pitch deck cover</span><span>Video 3</span><span>Talks and posts</span>
+    </div>
+  </div>
+</section>
+
+<section class="found">
+  <div class="wrap">
+    <p class="eyebrow">Protecting it</p>
+    <h2>What I found, and the next step</h2>
+    <p>A short phrase like a tagline is protected as a <b>trademark</b>, not a copyright. Copyright does not cover short phrases. A trademark protects a name or tagline used to sell services.</p>
+    <p><b>What my web search found on 31 October 2026.</b> This is a first check, not a legal search:</p>
+    <ul>
+      <li><b>"Evidence, not the model"</b> and <b>"Evidence, not models"</b>: I found no company or brand using either line. The only close hits were academic articles on models versus evidence, such as <a href="https://www.bostonreview.net/articles/jonathan-fuller-models-v-evidence/" target="_blank" rel="noopener">Boston Review</a> and <a href="https://lawofmarkets.com/2020/05/09/models-are-not-evidence/" target="_blank" rel="noopener">Law of Markets</a>, and an <a href="https://arxiv.org/pdf/2605.15474" target="_blank" rel="noopener">arXiv paper</a>.</li>
+      <li><b>"Evidence by Design"</b>: I found no brand using it. But the very close phrase "evidence-based design" is common in architecture, healthcare and product design. That may make "Evidence by Design" harder to register than the tagline.</li>
+      <li>I have not searched the trademark office databases yet. That is the real check.</li>
+    </ul>
+    <p style="margin-top:16px"><b>Next steps:</b> 1. Search the official databases: the US trademark office, Thailand's Department of Intellectual Property and WIPO's Global Brand Database. 2. Choose the service classes, such as software and consulting. 3. File. Filing costs money, so it waits for your approval. I recommend a trademark attorney for the filing.</p>
+  </div>
+</section>
+
+<section class="choices">
+  <div class="wrap">
+    <h2>Your choices</h2>
+    <ol>
+      <li><b>Supporting lines.</b><span class="opt">Which of A to E do you want to keep? My pick: A and C.</span></li>
+      <li><b>Hero idea for hashedworks.io.</b><span class="opt">Which of ideas 1 to 5? My pick: 1, the swap, because it shows the tagline in motion.</span></li>
+      <li><b>Trademark.</b><span class="opt">Shall I run the free official database searches now and report back? My pick: yes, then a trademark attorney for the filing.</span></li>
+    </ol>
+  </div>
+</section>
+
+<script>
+(function(){
+  var a=document.getElementById("aud"),pp=document.getElementById("pp"),ic=document.getElementById("ic");
+  var PLAY='<path d="M4 2.5v11l9-5.5z" fill="currentColor"/>',PAUSE='<path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z" fill="currentColor"/>';
+  pp.addEventListener("click",function(){ if(a.paused){a.play();ic.innerHTML=PAUSE;} else {a.pause();ic.innerHTML=PLAY;} });
+  a.addEventListener("ended",function(){ic.innerHTML=PLAY;});
+  var M=["frontier model","open-weight model","local model","next month's model"],m=document.getElementById("model"),i=0;
+  if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    setInterval(function(){ m.classList.add("fade"); setTimeout(function(){ i=(i+1)%M.length; m.textContent=M[i]; m.classList.remove("fade"); },260); },2200);
+  }
+  document.querySelectorAll(".chain .w").forEach(function(w){ w.addEventListener("click",function(){ w.classList.toggle("on"); }); });
+})();
+</script>
+</body>
+</html>
