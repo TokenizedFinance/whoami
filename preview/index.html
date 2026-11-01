@@ -200,9 +200,14 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
 .hqby{font-size:.95rem;color:var(--muted);margin-bottom:18px}
 /* claim band: evidence, not the model + UOB */
 .claim{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 20% 0%,#1c2060 0%,#0e1133 45%,#0b0d1f 100%);color:#e9ecff;padding:96px 0}
-.claim .names{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);align-content:center;gap:40px 10px;padding:40px;text-align:center;pointer-events:none}
-.claim .names span{font-weight:600;font-size:clamp(1rem,2vw,1.4rem);color:#8a92d8;transition:opacity 1.1s var(--ease),filter 1.1s var(--ease)}
-.claim .names span.gone{opacity:0;filter:blur(8px)}
+.claim .fade{position:relative;min-height:clamp(240px,30vw,360px);display:grid;align-items:center}
+.claim .names{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);align-content:center;gap:34px 12px;text-align:center;pointer-events:none}
+.claim .names span{display:flex;flex-direction:column;align-items:center;gap:10px;font-weight:600;font-size:clamp(.95rem,1.7vw,1.2rem);color:#8a92d8;transition:opacity 1.1s var(--ease),filter 1.1s var(--ease),transform 1.1s var(--ease)}
+.claim .names svg{width:clamp(38px,5vw,56px);height:auto;fill:currentColor}
+.claim .names span.gone{opacity:0;filter:blur(8px);transform:scale(.94)}
+.claim .big{transition:opacity 1s var(--ease),filter 1s var(--ease)}
+.claim .big.hide{opacity:0;filter:blur(10px)}
+.claim .tm{position:relative;margin-top:40px;font-size:.85rem;color:#c7cbff;opacity:.85}
 .claim .big{position:relative;font-size:clamp(2.6rem,7.5vw,5.6rem);line-height:1;font-weight:800;letter-spacing:-.04em;color:#fff;max-width:14ch}
 .claim .big em{font-style:normal;color:#9aa0ff;text-shadow:0 0 28px rgba(79,86,250,.55)}
 .claim .uob{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;margin-top:64px}
@@ -217,7 +222,7 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
 .claim.on .meter .a i{width:28%}.claim.on .meter .b i{width:94%}
 .meter .ill{font-size:.85rem;color:#dfe3ff;font-style:italic;margin:0}
 .meter small{display:block;font-size:.9rem;color:#dfe3ff;margin-top:6px}
-@media (max-width:860px){.claim .uob{grid-template-columns:1fr;gap:32px}.claim .names{grid-template-columns:repeat(2,1fr)}.claim{padding:72px 0}}
+@media (max-width:860px){.claim .uob{grid-template-columns:1fr;gap:32px}.claim .names{grid-template-columns:repeat(2,1fr)}.claim .fade{min-height:440px}.claim{padding:72px 0}}
 /* layer illustrations (hover a layer: a moving picture of what happens) */
 .ill-svg{display:block;width:100%;max-width:460px;height:auto;margin:0 0 18px;border-radius:10px;background:var(--panel);border:1px solid var(--line)}
 .ill-svg text{font-family:var(--sans)}
@@ -358,9 +363,8 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
 </div>
 
 <section class="claim" id="claim">
-  <div class="names" aria-hidden="true"></div>
   <div class="wrap">
-    <p class="big">Evidence, <em>not the model.</em></p>
+    <div class="fade"><div class="names" aria-hidden="true"></div><p class="big" aria-live="off">Evidence, <em>not the model.</em></p></div>
     <div class="uob">
       <div>
         <blockquote>“Success may depend less on how autonomous an agent is and more on how confidently institutions can govern and trust it.”</blockquote>
@@ -372,6 +376,7 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
         <div class="b"><p>How confidently you can govern and trust it</p><div class="bar"><i></i></div><small>We make that confidence provable, with evidence.</small></div>
       </div>
     </div>
+    <p class="tm">Logos belong to their owners. They name the models in use today; no partnership is implied.</p>
   </div>
 </section>
 
@@ -524,7 +529,7 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
     ["GDPR","EU data protection","The privacy law every data flow, including flows to model providers, is held to.",["Lawful basis","Data subject rights","Data protection by design","Breach notice within 72 hours","Cross-border transfers"]]];
   var LAY=[
     ["Maker","Your agents propose the actions","The maker is your agent. It proposes an action the way a payments clerk does: a payment, a key rotation, an access grant, a new vendor. Nothing it proposes runs on trust."],
-    ["Ledger","A receipt for every action","Not gathered for the audit. Evidence is produced as each action runs, on a record that cannot be altered, and one control set maps to every mandate, so one receipt serves your board, your auditor, your regulator and your enterprise customers at the same time. Any certification then becomes what it should be: proving controls that already run, at a pace your maturity sets."],
+    ["Ledger","A receipt for every action","Not gathered for the audit. Evidence is produced as each action runs, time-stamped and kept on a decentralized ledger that cannot be altered, so an auditor, a regulator or your own team can check what happened and when. One control set maps to every mandate, so one receipt serves your board, your auditor, your regulator and your enterprise customers at the same time. Any certification then becomes what it should be: proving controls that already run, at a pace your maturity sets."],
     ["Checker","Our agents test every action against the rulebook","The checker is ours. Every standard, control catalogue and regulatory mandate here lives in our agentic AI platform and its controls knowledge base. Our agents run every control in that rulebook, every day, not a team once a year, and test each action against it before it runs. What the rules do not allow, stops. What needs a person, waits for one. Hover over or tap a standard to see what sits under it."]];
 
   // layer illustrations
@@ -610,13 +615,23 @@ blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.3rem);
     },2800);
   })();
 
-  // claim band: model names fade out, meter fills (static under reduced motion)
+  // claim band: version A fade-through. Model logos fade out, "Evidence, not the model." fades in, then "Trust, proven every day."
   (function(){
     var c=document.getElementById("claim"); if(!c)return;
-    var n=c.querySelector(".names"),CO=["OpenAI","Anthropic","Google Gemini","xAI Grok","Meta Llama","DeepSeek","Mistral","Perplexity"];
-    CO.forEach(function(x){var s=document.createElement("span");s.textContent=x;n.appendChild(s);});
-    var sp=n.querySelectorAll("span"),RM=window.matchMedia("(prefers-reduced-motion: reduce)").matches,done=false;
-    function go(){ if(done)return; done=true; c.classList.add("on"); if(RM){sp.forEach(function(s){s.classList.add("gone");});return;} sp.forEach(function(s,i){ setTimeout(function(){s.classList.add("gone");},400+i*280); }); }
+    var n=c.querySelector(".names"),big=c.querySelector(".big"),L=[["OpenAI", "<path d=\"M21.55 10.004a5.416 5.416 0 00-.478-4.501c-1.217-2.09-3.662-3.166-6.05-2.66A5.59 5.59 0 0010.831 1C8.39.995 6.224 2.546 5.473 4.838A5.553 5.553 0 001.76 7.496a5.487 5.487 0 00.691 6.5 5.416 5.416 0 00.477 4.502c1.217 2.09 3.662 3.165 6.05 2.66A5.586 5.586 0 0013.168 23c2.443.006 4.61-1.546 5.361-3.84a5.553 5.553 0 003.715-2.66 5.488 5.488 0 00-.693-6.497v.001zm-8.381 11.558a4.199 4.199 0 01-2.675-.954c.034-.018.093-.05.132-.074l4.44-2.53a.71.71 0 00.364-.623v-6.176l1.877 1.069c.02.01.033.029.036.05v5.115c-.003 2.274-1.87 4.118-4.174 4.123zM4.192 17.78a4.059 4.059 0 01-.498-2.763c.032.02.09.055.131.078l4.44 2.53c.225.13.504.13.73 0l5.42-3.088v2.138a.068.068 0 01-.027.057L9.9 19.288c-1.999 1.136-4.552.46-5.707-1.51h-.001zM3.023 8.216A4.15 4.15 0 015.198 6.41l-.002.151v5.06a.711.711 0 00.364.624l5.42 3.087-1.876 1.07a.067.067 0 01-.063.005l-4.489-2.559c-1.995-1.14-2.679-3.658-1.53-5.63h.001zm15.417 3.54l-5.42-3.088L14.896 7.6a.067.067 0 01.063-.006l4.489 2.557c1.998 1.14 2.683 3.662 1.529 5.633a4.163 4.163 0 01-2.174 1.807V12.38a.71.71 0 00-.363-.623zm1.867-2.773a6.04 6.04 0 00-.132-.078l-4.44-2.53a.731.731 0 00-.729 0l-5.42 3.088V7.325a.068.068 0 01.027-.057L14.1 4.713c2-1.137 4.555-.46 5.707 1.513.487.833.664 1.809.499 2.757h.001zm-11.741 3.81l-1.877-1.068a.065.065 0 01-.036-.051V6.559c.001-2.277 1.873-4.122 4.181-4.12.976 0 1.92.338 2.671.954-.034.018-.092.05-.131.073l-4.44 2.53a.71.71 0 00-.365.623l-.003 6.173v.002zm1.02-2.168L12 9.25l2.414 1.375v2.75L12 14.75l-2.415-1.375v-2.75z\"></path>"], ["Anthropic", "<path d=\"M13.827 3.52h3.603L24 20h-3.603l-6.57-16.48zm-7.258 0h3.767L16.906 20h-3.674l-1.343-3.461H5.017l-1.344 3.46H0L6.57 3.522zm4.132 9.959L8.453 7.687 6.205 13.48H10.7z\"></path>"], ["Google Gemini", "<path d=\"M12 24A14.304 14.304 0 000 12 14.304 14.304 0 0012 0a14.305 14.305 0 0012 12 14.305 14.305 0 00-12 12\"></path>"], ["xAI Grok", "<path d=\"M9.27 15.29l7.978-5.897c.391-.29.95-.177 1.137.272.98 2.369.542 5.215-1.41 7.169-1.951 1.954-4.667 2.382-7.149 1.406l-2.711 1.257c3.889 2.661 8.611 2.003 11.562-.953 2.341-2.344 3.066-5.539 2.388-8.42l.006.007c-.983-4.232.242-5.924 2.75-9.383.06-.082.12-.164.179-.248l-3.301 3.305v-.01L9.267 15.292M7.623 16.723c-2.792-2.67-2.31-6.801.071-9.184 1.761-1.763 4.647-2.483 7.166-1.425l2.705-1.25a7.808 7.808 0 00-1.829-1A8.975 8.975 0 005.984 5.83c-2.533 2.536-3.33 6.436-1.962 9.764 1.022 2.487-.653 4.246-2.34 6.022-.599.63-1.199 1.259-1.682 1.925l7.62-6.815\"></path>"], ["Meta Llama", "<path d=\"M6.897 4c1.915 0 3.516.932 5.43 3.376l.282-.373c.19-.246.383-.484.58-.71l.313-.35C14.588 4.788 15.792 4 17.225 4c1.273 0 2.469.557 3.491 1.516l.218.213c1.73 1.765 2.917 4.71 3.053 8.026l.011.392.002.25c0 1.501-.28 2.759-.818 3.7l-.14.23-.108.153c-.301.42-.664.758-1.086 1.009l-.265.142-.087.04a3.493 3.493 0 01-.302.118 4.117 4.117 0 01-1.33.208c-.524 0-.996-.067-1.438-.215-.614-.204-1.163-.56-1.726-1.116l-.227-.235c-.753-.812-1.534-1.976-2.493-3.586l-1.43-2.41-.544-.895-1.766 3.13-.343.592C7.597 19.156 6.227 20 4.356 20c-1.21 0-2.205-.42-2.936-1.182l-.168-.184c-.484-.573-.837-1.311-1.043-2.189l-.067-.32a8.69 8.69 0 01-.136-1.288L0 14.468c.002-.745.06-1.49.174-2.23l.1-.573c.298-1.53.828-2.958 1.536-4.157l.209-.34c1.177-1.83 2.789-3.053 4.615-3.16L6.897 4zm-.033 2.615l-.201.01c-.83.083-1.606.673-2.252 1.577l-.138.199-.01.018c-.67 1.017-1.185 2.378-1.456 3.845l-.004.022a12.591 12.591 0 00-.207 2.254l.002.188c.004.18.017.36.04.54l.043.291c.092.503.257.908.486 1.208l.117.137c.303.323.698.492 1.17.492 1.1 0 1.796-.676 3.696-3.641l2.175-3.4.454-.701-.139-.198C9.11 7.3 8.084 6.616 6.864 6.616zm10.196-.552l-.176.007c-.635.048-1.223.359-1.82.933l-.196.198c-.439.462-.887 1.064-1.367 1.807l.266.398c.18.274.362.56.55.858l.293.475 1.396 2.335.695 1.114c.583.926 1.03 1.6 1.408 2.082l.213.262c.282.326.529.54.777.673l.102.05c.227.1.457.138.718.138.176.002.35-.023.518-.073.338-.104.61-.32.813-.637l.095-.163.077-.162c.194-.459.29-1.06.29-1.785l-.006-.449c-.08-2.871-.938-5.372-2.2-6.798l-.176-.189c-.67-.683-1.444-1.074-2.27-1.074z\"></path>"], ["DeepSeek", "<path d=\"M23.748 4.482c-.254-.124-.364.113-.512.234-.051.039-.094.09-.137.136-.372.397-.806.657-1.373.626-.829-.046-1.537.214-2.163.848-.133-.782-.575-1.248-1.247-1.548-.352-.156-.708-.311-.955-.65-.172-.241-.219-.51-.305-.774-.055-.16-.11-.323-.293-.35-.2-.031-.278.136-.356.276-.313.572-.434 1.202-.422 1.84.027 1.436.633 2.58 1.838 3.393.137.093.172.187.129.323-.082.28-.18.552-.266.833-.055.179-.137.217-.329.14a5.526 5.526 0 01-1.736-1.18c-.857-.828-1.631-1.742-2.597-2.458a11.365 11.365 0 00-.689-.471c-.985-.957.13-1.743.388-1.836.27-.098.093-.432-.779-.428-.872.004-1.67.295-2.687.684a3.055 3.055 0 01-.465.137 9.597 9.597 0 00-2.883-.102c-1.885.21-3.39 1.102-4.497 2.623C.082 8.606-.231 10.684.152 12.85c.403 2.284 1.569 4.175 3.36 5.653 1.858 1.533 3.997 2.284 6.438 2.14 1.482-.085 3.133-.284 4.994-1.86.47.234.962.327 1.78.397.63.059 1.236-.03 1.705-.128.735-.156.684-.837.419-.961-2.155-1.004-1.682-.595-2.113-.926 1.096-1.296 2.746-2.642 3.392-7.003.05-.347.007-.565 0-.845-.004-.17.035-.237.23-.256a4.173 4.173 0 001.545-.475c1.396-.763 1.96-2.015 2.093-3.517.02-.23-.004-.467-.247-.588zM11.581 18c-2.089-1.642-3.102-2.183-3.52-2.16-.392.024-.321.471-.235.763.09.288.207.486.371.739.114.167.192.416-.113.603-.673.416-1.842-.14-1.897-.167-1.361-.802-2.5-1.86-3.301-3.307-.774-1.393-1.224-2.887-1.298-4.482-.02-.386.093-.522.477-.592a4.696 4.696 0 011.529-.039c2.132.312 3.946 1.265 5.468 2.774.868.86 1.525 1.887 2.202 2.891.72 1.066 1.494 2.082 2.48 2.914.348.292.625.514.891.677-.802.09-2.14.11-3.054-.614zm1-6.44a.306.306 0 01.415-.287.302.302 0 01.2.288.306.306 0 01-.31.307.303.303 0 01-.304-.308zm3.11 1.596c-.2.081-.399.151-.59.16a1.245 1.245 0 01-.798-.254c-.274-.23-.47-.358-.552-.758a1.73 1.73 0 01.016-.588c.07-.327-.008-.537-.239-.727-.187-.156-.426-.199-.688-.199a.559.559 0 01-.254-.078c-.11-.054-.2-.19-.114-.358.028-.054.16-.186.192-.21.356-.202.767-.136 1.146.016.352.144.618.408 1.001.782.391.451.462.576.685.914.176.265.336.537.445.848.067.195-.019.354-.25.452z\"></path>"], ["Mistral AI", "<path clip-rule=\"evenodd\" d=\"M3.428 3.4h3.429v3.428h3.429v3.429h-.002 3.431V6.828h3.427V3.4h3.43v13.714H24v3.429H13.714v-3.428h-3.428v-3.429h-3.43v3.428h3.43v3.429H0v-3.429h3.428V3.4zm10.286 13.715h3.428v-3.429h-3.427v3.429z\"></path>"], ["Perplexity", "<path d=\"M19.785 0v7.272H22.5V17.62h-2.935V24l-7.037-6.194v6.145h-1.091v-6.152L4.392 24v-6.465H1.5V7.188h2.884V0l7.053 6.494V.19h1.09v6.49L19.786 0zm-7.257 9.044v7.319l5.946 5.234V14.44l-5.946-5.397zm-1.099-.08l-5.946 5.398v7.235l5.946-5.234V8.965zm8.136 7.58h1.844V8.349H13.46l6.105 5.54v2.655zm-8.982-8.28H2.59v8.195h1.8v-2.576l6.192-5.62zM5.475 2.476v4.71h5.115l-5.115-4.71zm13.219 0l-5.115 4.71h5.115v-4.71z\"></path>"]];
+    L.forEach(function(x){var s=document.createElement("span");s.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" fill-rule="evenodd">'+x[1]+'</svg>'+x[0];n.appendChild(s);});
+    var sp=n.querySelectorAll("span"),RM=window.matchMedia("(prefers-reduced-motion: reduce)").matches,started=false,T=[];
+    var W=[big.innerHTML,'Trust, <em>proven every day.</em>'];
+    function at(ms,f){T.push(setTimeout(f,ms));}
+    function cycle(){ T.forEach(clearTimeout); T=[]; big.classList.add("hide"); big.innerHTML=W[0]; sp.forEach(function(s){s.classList.remove("gone");});
+      sp.forEach(function(s,i){ at(1200+i*320,function(){s.classList.add("gone");}); });
+      var e=1200+sp.length*320+300;
+      at(e,function(){big.classList.remove("hide");});
+      at(e+4200,function(){big.classList.add("hide");});
+      at(e+5200,function(){big.innerHTML=W[1];big.classList.remove("hide");});
+      at(e+9600,function(){big.classList.add("hide");});
+      at(e+10600,cycle); }
+    function go(){ if(started)return; started=true; c.classList.add("on"); if(RM){sp.forEach(function(s){s.classList.add("gone");});return;} cycle(); }
     if("IntersectionObserver" in window){ new IntersectionObserver(function(es){ if(es[0].isIntersecting)go(); },{threshold:.35}).observe(c); } else go();
   })();
 })();
