@@ -55,6 +55,32 @@ h2{font-size:clamp(1.5rem,3vw,2rem);color:var(--ink);letter-spacing:-.02em;margi
 .b .out b{display:block;font-size:clamp(2.6rem,6vw,4.4rem);line-height:1;letter-spacing:-.04em;color:var(--ink);font-weight:800}
 .b .out b+b{color:var(--royal);margin-top:6px}
 
+/* E: the virtual regulator (flow diagram) */
+.e svg{display:block;width:100%;height:auto}
+.e text{font-family:Inter,Arial,sans-serif}
+.e .lbl{font-size:12px;font-weight:700;fill:#dfe3ff;letter-spacing:.08em;text-transform:uppercase}
+.e .sm{font-size:11px;fill:var(--on-night-muted)}
+.e .box{fill:rgba(255,255,255,.04);stroke:rgba(169,176,224,.35);stroke-width:1.2}
+.e .ours{fill:rgba(79,86,250,.16);stroke:#6b72ff;stroke-width:1.6}
+.e .chip{fill:#14183a;stroke:rgba(169,176,224,.4)}
+.e .chip.rule{stroke:#6b72ff}
+.e .chipT{font-size:10.5px;fill:#e9ecff;font-weight:600;text-anchor:middle}
+.e .lane{stroke:rgba(169,176,224,.25);stroke-dasharray:3 5}
+.e .act{animation:eflow 9s linear infinite;offset-rotate:0deg}
+.e .act rect{fill:#0b0d1f;stroke:#08c2ff;stroke-width:1.2}
+.e .act text{font-size:9.5px;fill:#fff;font-weight:600;text-anchor:middle}
+.e .verdict{opacity:0;animation:everdict 9s linear infinite;transform-box:fill-box;transform-origin:center}
+.e .rcpt{opacity:0;animation:ercpt 9s linear infinite}
+.e .rcpt rect{fill:#fff}
+.e .rcpt text{font-family:"DM Mono",monospace;font-size:8.5px;fill:#0a0a0a}
+.e .beam{stroke:#08c2ff;stroke-width:1.2;stroke-dasharray:4 6;animation:ebeam 1.2s linear infinite}
+.e .readers text{font-size:10.5px;fill:#e9ecff;text-anchor:middle;font-weight:600}
+@keyframes eflow{0%{offset-distance:0%;opacity:0}4%{opacity:1}44%{offset-distance:100%;opacity:1}52%{offset-distance:100%;opacity:0}100%{offset-distance:100%;opacity:0}}
+@keyframes everdict{0%,44%{opacity:0;transform:scale(.6)}50%,80%{opacity:1;transform:scale(1)}88%,100%{opacity:0}}
+@keyframes ercpt{0%,56%{opacity:0;transform:translateY(10px)}64%,100%{opacity:1;transform:none}}
+@keyframes ebeam{to{stroke-dashoffset:-20}}
+@media (prefers-reduced-motion:reduce){.e .act,.e .verdict,.e .rcpt,.e .beam{animation:none!important;opacity:1}.e .act{offset-distance:100%}}
+
 /* C: eclipse */
 .c svg{display:block;width:100%;height:auto;max-height:520px}
 .c .orb{font-family:Inter,sans-serif;font-size:15px;font-weight:600;fill:var(--on-night-muted);text-anchor:middle;transition:opacity .8s var(--ease)}
@@ -150,6 +176,47 @@ h2{font-size:clamp(1.5rem,3vw,2rem);color:var(--ink);letter-spacing:-.02em;margi
 
 <section class="v">
   <div class="wrap">
+    <h2>Version E: The virtual regulator</h2>
+    <p class="cap">Your 1 Nov ask: the eclipse idea as an architecture flow. The bank keeps whatever AI it has. Our system runs beside it as an independent virtual regulator, tests every agent action against the bank's own rules and the regulatory rules, and writes a time-stamped receipt to a ledger that cannot be altered. Allow, hold for a person, or block. The board, the auditor and the regulator read the ledger.</p>
+    <div class="stage e" id="E"><svg viewBox="0 0 900 505" role="img" aria-label="The bank's AI agents propose actions. They pass through an independent virtual regulator that applies the bank's rules and the regulator's rules, then every action, allowed, held or blocked, is written as a time-stamped receipt on a ledger that cannot be altered, read by the board, the auditor and the regulator">
+  <text class="lbl" x="40" y="60">Your bank's AI stack</text>
+  <text class="sm" x="40" y="78">any models, any vendor</text>
+  <rect class="box" x="40" y="92" width="196" height="330" rx="12"/>
+  <text class="sm" x="56" y="150">agents</text>
+  <rect class="chip" x="56" y="165" width="160" height="30" rx="8"/><text class="chipT" x="136" y="184">Payments agent</text><rect class="chip" x="56" y="220" width="160" height="30" rx="8"/><text class="chipT" x="136" y="239">Treasury agent</text><rect class="chip" x="56" y="275" width="160" height="30" rx="8"/><text class="chipT" x="136" y="294">Onboarding agent</text><rect class="chip" x="56" y="330" width="160" height="30" rx="8"/><text class="chipT" x="136" y="349">Reporting agent</text>
+  <text class="sm" x="56" y="385">their models</text>
+  <rect class="chip" x="56" y="393" width="48" height="20" rx="6"/><text class="chipT" x="80" y="406.5" style="font-size:8.5px">frontier</text>
+  <rect class="chip" x="108" y="393" width="60" height="20" rx="6"/><text class="chipT" x="138" y="406.5" style="font-size:8.5px">open-weight</text>
+  <rect class="chip" x="172" y="393" width="44" height="20" rx="6"/><text class="chipT" x="194" y="406.5" style="font-size:8.5px">local</text>
+  <line class="lane" x1="236" y1="180" x2="420" y2="180"/><line class="lane" x1="236" y1="235" x2="420" y2="235"/><line class="lane" x1="236" y1="290" x2="420" y2="290"/><line class="lane" x1="236" y1="345" x2="420" y2="345"/>
+  <text class="sm" x="328" y="160" text-anchor="middle">every action proposed</text>
+  <text class="lbl" x="420" y="60">The virtual regulator</text>
+  <text class="sm" x="420" y="78">ours, runs independently of your stack</text>
+  <rect class="ours" x="420" y="92" width="210" height="330" rx="12"/>
+  <rect class="chip rule" x="436" y="106" width="178" height="24" rx="7"/><text class="chipT" x="525" y="122">Your bank's rules</text>
+  <rect class="chip rule" x="436" y="134" width="178" height="24" rx="7"/><text class="chipT" x="525" y="150">Regulatory rules</text>
+  <line class="beam" x1="436" y1="164" x2="614" y2="164"/>
+  <text class="sm" x="436" y="408" style="font-size:9.5px">tested before it runs · maker · checker · ledger</text>
+  <g class="act" style="offset-path:path('M236 180 L418 180');animation-delay:0s"><rect x="-38" y="-9" width="76" height="18" rx="9"/><text y="3.5">Pay USD 2.4M</text></g><g class="act" style="offset-path:path('M236 235 L418 235');animation-delay:-2.25s"><rect x="-38" y="-9" width="76" height="18" rx="9"/><text y="3.5">Rotate key</text></g><g class="act" style="offset-path:path('M236 290 L418 290');animation-delay:-4.5s"><rect x="-38" y="-9" width="76" height="18" rx="9"/><text y="3.5">New vendor</text></g><g class="act" style="offset-path:path('M236 345 L418 345');animation-delay:-6.75s"><rect x="-38" y="-9" width="76" height="18" rx="9"/><text y="3.5">Grant access</text></g>
+  <g class="verdict" style="animation-delay:0s"><g transform="translate(500 180)"><circle r="11" fill="#08c2ff"/><path d="M-6 0l4 4 8-8" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><text x="518" y="184" class="sm" style="fill:#fff;font-weight:600">allow</text></g><g class="verdict" style="animation-delay:-2.25s"><g transform="translate(500 235)"><circle r="11" fill="#ffb547"/><rect x="-5" y="-5" width="3.5" height="10" fill="#fff"/><rect x="1.5" y="-5" width="3.5" height="10" fill="#fff"/></g><text x="518" y="239" class="sm" style="fill:#fff;font-weight:600">hold for a person</text></g><g class="verdict" style="animation-delay:-4.5s"><g transform="translate(500 290)"><circle r="11" fill="#08c2ff"/><path d="M-6 0l4 4 8-8" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><text x="518" y="294" class="sm" style="fill:#fff;font-weight:600">allow</text></g><g class="verdict" style="animation-delay:-6.75s"><g transform="translate(500 345)"><circle r="11" fill="#ff5f6d"/><path d="M-5 -5l10 10M5 -5l-10 10" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></g><text x="518" y="349" class="sm" style="fill:#fff;font-weight:600">block</text></g>
+  <text class="lbl" x="662" y="60">Trust ledger</text>
+  <text class="sm" x="662" y="78">time-stamped · cannot be altered</text>
+  <rect class="box" x="650" y="92" width="214" height="330" rx="12"/>
+  <g class="rcpt" style="animation-delay:0s"><rect x="662" y="112" width="190" height="48" rx="5"/><text x="672" y="127">2026-11-01 09:14:03Z</text><text x="672" y="140">Pay USD 2.4M · allow</text><text x="672" y="153">rule: bank + regulator · hash 7c00…</text></g><g class="rcpt" style="animation-delay:-2.25s"><rect x="662" y="182" width="190" height="48" rx="5"/><text x="672" y="197">2026-11-01 09:14:11Z</text><text x="672" y="210">Rotate key · hold for a person</text><text x="672" y="223">rule: bank + regulator · hash 7c01…</text></g><g class="rcpt" style="animation-delay:-4.5s"><rect x="662" y="252" width="190" height="48" rx="5"/><text x="672" y="267">2026-11-01 09:14:26Z</text><text x="672" y="280">New vendor · allow</text><text x="672" y="293">rule: bank + regulator · hash 7c02…</text></g><g class="rcpt" style="animation-delay:-6.75s"><rect x="662" y="322" width="190" height="48" rx="5"/><text x="672" y="337">2026-11-01 09:14:40Z</text><text x="672" y="350">Grant access · block</text><text x="672" y="363">rule: bank + regulator · hash 7c03…</text></g>
+  <g class="readers">
+    <line class="lane" x1="757" y1="422" x2="757" y2="446"/>
+    <rect class="chip" x="656" y="446" width="62" height="24" rx="7"/><text x="687" y="462">Board</text>
+    <rect class="chip" x="726" y="446" width="62" height="24" rx="7"/><text x="757" y="462">Auditor</text>
+    <rect class="chip" x="796" y="446" width="64" height="24" rx="7"/><text x="828" y="462">Regulator</text>
+  </g>
+  <text class="sm" x="40" y="494" style="font-size:12px;fill:#fff;font-weight:600">The bank keeps its own AI. We sit beside it, apply the bank's rules and the regulator's rules to every agent action, and write the receipt.</text>
+</svg></div>
+    <p class="note">Concept level only: no vendor, model or product named. The receipt detail stays private (version D is for Dex and the review output). Product name for the virtual regulator: Iris's brand brief.</p>
+  </div>
+</section>
+
+<section class="v">
+  <div class="wrap">
     <h2>Version D: Receipt</h2>
     <p class="cap">The companies scroll past in a ticker. A receipt prints for one AI decision: the rule, the approval, the proof. It is stamped "Trust". This shows what we actually deliver.</p>
     <div class="stage d" id="D">
@@ -171,11 +238,15 @@ h2{font-size:clamp(1.5rem,3vw,2rem);color:var(--ink);letter-spacing:-.02em;margi
 
 <section class="choices">
   <div class="wrap">
-    <h2>Your choices</h2>
+    <h2>Decided on 1 Nov</h2>
     <ol>
-      <li><b>Which version?</b><span class="opt">A, B, C or D, or a mix. My pick: A for the website hero, D for decks and the AI Governance Review.</span></li>
-      <li><b>Names or real logos?</b><span class="opt">Real logos belong to those companies, and most of their brand rules do not allow use in someone else's marketing. Names in plain text make the same point with less risk. My pick: names.</span></li>
-      <li><b>Where first?</b><span class="opt">hashedworks.io hero, Who am I, LinkedIn banner, or the deck. My pick: the hashedworks.io hero.</span></li>
+      <li><b>Version A, with real logos</b><span class="opt">Live on the Who am I, Hashed Works, Astra and OpenZeppelin previews. Words replace a logo only if that company objects.</span></li>
+      <li><b>Version D, the receipt</b><span class="opt">Our IP. It goes into Dex, the AI review output, the security scanner output and customer decks, not the public pages. Two levels: a short receipt for managers and a detailed record. Every record time-stamped on a decentralized ledger that cannot be altered.</span></li>
+      <li><b>Product name for the trust product</b><span class="opt">Hashed Works, A2I or a new name: a brand brief for Iris.</span></li>
+    </ol>
+    <h2 style="margin-top:28px">Your choice now</h2>
+    <ol>
+      <li><b>Where does version E go?</b><span class="opt">1. Hashed Works home, in the How section above the three layers. 2. Hashed Works home and Who am I. 3. Its own "How it works" section on every page. My pick: 1, home first, then copy once you like it.</span></li>
     </ol>
   </div>
 </section>
